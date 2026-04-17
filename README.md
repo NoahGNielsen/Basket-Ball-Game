@@ -1,3 +1,4 @@
+**Work in Progress**
 # Basket Ball Game
 
 ![C#](https://img.shields.io/badge/language-C%23-blue.svg)
@@ -19,4 +20,5 @@ Distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICEN
 **Developers:** <br>
 [Noah G. Nielsen](https://github.com/NoahGNielsen/) <br>
 [Tobias P. Jørgensen](https://github.com/God-04) <br>
-**School:** [HANSENBERG Tekniske Gymnasium](https://www.hansenberg.dk/htx/)
+**School:**<br>
+[HANSENBERG Tekniske Gymnasium](https://www.hansenberg.dk/htx/)
