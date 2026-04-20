@@ -11,5 +11,10 @@ namespace Basket_Ball_Game
         {
 
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

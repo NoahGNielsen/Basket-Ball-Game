@@ -4,6 +4,8 @@ namespace Basket_Ball_Game
     {
         public readonly static bool debugMode = true; //default: false
         public readonly static int pointAddOnGoal = 1; //default: 1
+        public readonly static int playerMovementSpeed = 5; //default: placeHolder
+        public readonly static int playerMovementJumpHeight = 10; //default: placeHolder
     }
     internal static class Program
     {
