@@ -3,7 +3,7 @@ namespace Basket_Ball_Game
     public static class GlobalConfig //settings
     {
         public readonly static bool debugMode = true; //default: false
-        public readonly static int pointAddOnGoal = 1;
+        public readonly static int pointAddOnGoal = 1; //default: 1
     }
     internal static class Program
     {
@@ -13,14 +13,12 @@ namespace Basket_Ball_Game
         [STAThread]
         static void Main()
         {
+            Task.Run(() => Startup.Start());
             Console.WriteLine("Hello");
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            Startup.Start();
         }
-
-        //test
     }
 }
