@@ -36,9 +36,10 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Person_sprite;
-            pictureBox1.Location = new Point(117, 10);
+            pictureBox1.Location = new Point(134, 13);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(99, 319);
+            pictureBox1.Size = new Size(113, 425);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -46,17 +47,19 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1904, 1041);
+            ClientSize = new Size(914, 600);
             Controls.Add(pictureBox1);
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
             Name = "Form1";
-            Text = "Basketball Game";
+            Text = "Form1";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
