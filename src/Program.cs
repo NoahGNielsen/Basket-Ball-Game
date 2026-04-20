@@ -3,6 +3,7 @@ namespace Basket_Ball_Game
     public static class GlobalConfig //settings
     {
         public readonly static bool debugMode = true; //default: false
+        public readonly static int pointAddOnGoal = 1;
     }
     internal static class Program
     {
@@ -17,6 +18,7 @@ namespace Basket_Ball_Game
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+            Startup.Start();
         }
 
         //test
