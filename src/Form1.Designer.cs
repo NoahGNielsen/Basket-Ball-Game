@@ -34,9 +34,11 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Image = Properties.Resources.Person_sprite;
             pictureBox1.Location = new Point(52, 86);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(165, 319);
+            pictureBox1.Size = new Size(99, 319);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
