@@ -1,5 +1,9 @@
 namespace Basket_Ball_Game
 {
+    public static class GlobalConfig //settings
+    {
+        public readonly static bool debugMode = true; //default: false
+    }
     internal static class Program
     {
         /// <summary>
@@ -14,5 +18,7 @@ namespace Basket_Ball_Game
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
+
+        //test
     }
 }
