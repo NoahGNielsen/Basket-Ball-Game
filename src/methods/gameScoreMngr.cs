@@ -28,12 +28,14 @@
             {
                 //add 1 point to team 1
                 team1Score += GlobalConfig.pointAddOnGoal;
+                updateScoreDisplay();
                 return true;
             }
             else if (team == 2)
             {
                 //add 1 point to team 2
                 team2Score += GlobalConfig.pointAddOnGoal;
+                updateScoreDisplay();
                 return true;
             }
             else
@@ -42,7 +44,7 @@
             }
         }
 
-        static void updateScoreDisplay()
+        public static void updateScoreDisplay()
         {
             //update the score display on the form
             Form1 form = Application.OpenForms.OfType<Form1>().FirstOrDefault();
@@ -56,6 +58,7 @@
             }
         }
 
+        //reset the score of both teams to 0
         static void resetScore()
         {
             team1Score = 0;
