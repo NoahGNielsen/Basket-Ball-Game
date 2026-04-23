@@ -34,6 +34,7 @@
             label_scoreTeam2 = new Label();
             P1 = new PictureBox();
             picBox_basketBall = new PictureBox();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
             SuspendLayout();
@@ -43,9 +44,9 @@
             label_scoreTitle.AutoSize = true;
             label_scoreTitle.BackColor = Color.Transparent;
             label_scoreTitle.Font = new Font("Segoe UI", 20F);
-            label_scoreTitle.Location = new Point(859, 51);
+            label_scoreTitle.Location = new Point(752, 38);
             label_scoreTitle.Name = "label_scoreTitle";
-            label_scoreTitle.Size = new Size(104, 46);
+            label_scoreTitle.Size = new Size(82, 37);
             label_scoreTitle.TabIndex = 2;
             label_scoreTitle.Text = "Score";
             // 
@@ -54,9 +55,9 @@
             label_scoreTeam1.AutoSize = true;
             label_scoreTeam1.BackColor = Color.Transparent;
             label_scoreTeam1.Font = new Font("Segoe UI", 30F);
-            label_scoreTeam1.Location = new Point(802, 117);
+            label_scoreTeam1.Location = new Point(702, 88);
             label_scoreTeam1.Name = "label_scoreTeam1";
-            label_scoreTeam1.Size = new Size(56, 67);
+            label_scoreTeam1.Size = new Size(45, 54);
             label_scoreTeam1.TabIndex = 3;
             label_scoreTeam1.Text = "0";
             label_scoreTeam1.Click += label1_Click;
@@ -66,9 +67,9 @@
             label_scoreTeam2.AutoSize = true;
             label_scoreTeam2.BackColor = Color.Transparent;
             label_scoreTeam2.Font = new Font("Segoe UI", 30F);
-            label_scoreTeam2.Location = new Point(965, 117);
+            label_scoreTeam2.Location = new Point(844, 88);
             label_scoreTeam2.Name = "label_scoreTeam2";
-            label_scoreTeam2.Size = new Size(56, 67);
+            label_scoreTeam2.Size = new Size(45, 54);
             label_scoreTeam2.TabIndex = 4;
             label_scoreTeam2.Text = "0";
             // 
@@ -77,10 +78,9 @@
             P1.ErrorImage = Properties.Resources.Person_sprite;
             P1.Image = Properties.Resources.Person_sprite;
             P1.InitialImage = Properties.Resources.Person_sprite;
-            P1.Location = new Point(407, 565);
-            P1.Margin = new Padding(3, 4, 3, 4);
+            P1.Location = new Point(356, 424);
             P1.Name = "P1";
-            P1.Size = new Size(88, 299);
+            P1.Size = new Size(77, 224);
             P1.SizeMode = PictureBoxSizeMode.Zoom;
             P1.TabIndex = 5;
             P1.TabStop = false;
@@ -88,19 +88,31 @@
             // picBox_basketBall
             // 
             picBox_basketBall.Image = Properties.Resources.sprite_basketBall;
-            picBox_basketBall.Location = new Point(607, 320);
+            picBox_basketBall.Location = new Point(531, 240);
+            picBox_basketBall.Margin = new Padding(3, 2, 3, 2);
             picBox_basketBall.Name = "picBox_basketBall";
-            picBox_basketBall.Size = new Size(75, 75);
+            picBox_basketBall.Size = new Size(66, 56);
             picBox_basketBall.SizeMode = PictureBoxSizeMode.StretchImage;
             picBox_basketBall.TabIndex = 6;
             picBox_basketBall.TabStop = false;
             // 
+            // button1
+            // 
+            button1.Location = new Point(142, 60);
+            button1.Name = "button1";
+            button1.Size = new Size(177, 65);
+            button1.TabIndex = 7;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
-            ClientSize = new Size(1578, 739);
+            ClientSize = new Size(1381, 554);
+            Controls.Add(button1);
             Controls.Add(picBox_basketBall);
             Controls.Add(P1);
             Controls.Add(label_scoreTeam2);
@@ -109,13 +121,13 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
+            KeyDown += Form1_KeyDown_1;
             ((System.ComponentModel.ISupportInitialize)P1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).EndInit();
             ResumeLayout(false);
@@ -128,5 +140,6 @@
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
         private PictureBox picBox_basketBall;
+        private Button button1;
     }
 }
