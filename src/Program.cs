@@ -6,6 +6,8 @@ namespace Basket_Ball_Game
         public readonly static int pointAddOnGoal = 1; //default: 1
         public readonly static int playerMovementSpeed = 5; //default: placeHolder
         public readonly static int playerMovementJumpHeight = 10; //default: placeHolder
+        public readonly static int gameSizeX = 1822;
+        public readonly static int gameSizeY = 1032;
     }
     internal static class Program
     {
