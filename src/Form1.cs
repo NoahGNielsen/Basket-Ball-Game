@@ -14,7 +14,14 @@ namespace Basket_Ball_Game
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY);
+            int scoreOffset = 100; // in px
+
+            this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY); //sets window size
+
+            // sets ui elements
+            label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2)-label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
+            label_scoreTeam1.Location = new Point(-scoreOffset+((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
+            label_scoreTeam2.Location = new Point(scoreOffset+(GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
