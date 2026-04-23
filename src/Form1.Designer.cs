@@ -30,39 +30,28 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             picBox_map = new PictureBox();
-            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)picBox_map).BeginInit();
             SuspendLayout();
             // 
             // picBox_map
             // 
             picBox_map.Image = Properties.Resources.map_basketBallCourt;
-            picBox_map.Location = new Point(12, 12);
+            picBox_map.Location = new Point(10, 9);
+            picBox_map.Margin = new Padding(3, 2, 3, 2);
             picBox_map.Name = "picBox_map";
-            picBox_map.Size = new Size(1780, 961);
+            picBox_map.Size = new Size(1822, 1032);
             picBox_map.TabIndex = 1;
             picBox_map.TabStop = false;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(20, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 20);
-            label1.TabIndex = 2;
-            label1.Text = "label1";
-            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1804, 985);
-            Controls.Add(label1);
+            ClientSize = new Size(1806, 993);
             Controls.Add(picBox_map);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
@@ -71,12 +60,10 @@
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)picBox_map).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private PictureBox picBox_map;
-        private Label label1;
     }
 }
