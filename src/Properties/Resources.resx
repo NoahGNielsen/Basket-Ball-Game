@@ -124,4 +124,7 @@
   <data name="Person arm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\images\Person arm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="map_basketBallCourt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\images\map_basketBallCourt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

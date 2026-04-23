@@ -29,28 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            picBox_map = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)picBox_map).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // picBox_map
             // 
-            pictureBox1.Image = Properties.Resources.Person_sprite;
-            pictureBox1.Location = new Point(134, 13);
-            pictureBox1.Margin = new Padding(3, 4, 3, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(113, 425);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+            picBox_map.Image = Properties.Resources.map_basketBallCourt;
+            picBox_map.Location = new Point(12, 12);
+            picBox_map.Name = "picBox_map";
+            picBox_map.Size = new Size(1780, 961);
+            picBox_map.TabIndex = 1;
+            picBox_map.TabStop = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1804, 985);
-            Controls.Add(pictureBox1);
+            Controls.Add(picBox_map);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -61,12 +58,12 @@
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picBox_map).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private PictureBox pictureBox1;
+        private PictureBox picBox_map;
     }
 }
