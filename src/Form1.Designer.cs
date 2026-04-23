@@ -29,24 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            picBox_map = new PictureBox();
             label_scoreTitle = new Label();
             label_scoreTeam1 = new Label();
             label_scoreTeam2 = new Label();
             P1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)picBox_map).BeginInit();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             SuspendLayout();
-            // 
-            // picBox_map
-            // 
-            picBox_map.Image = Properties.Resources.map_basketBallCourt;
-            picBox_map.Location = new Point(10, 9);
-            picBox_map.Margin = new Padding(3, 2, 3, 2);
-            picBox_map.Name = "picBox_map";
-            picBox_map.Size = new Size(1558, 721);
-            picBox_map.TabIndex = 1;
-            picBox_map.TabStop = false;
             // 
             // label_scoreTitle
             // 
@@ -94,16 +83,27 @@
             P1.TabIndex = 5;
             P1.TabStop = false;
             // 
+            // button1
+            // 
+            button1.Location = new Point(106, 60);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 6;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.map_basketBallCourt;
             ClientSize = new Size(1578, 739);
+            Controls.Add(button1);
             Controls.Add(P1);
             Controls.Add(label_scoreTeam2);
             Controls.Add(label_scoreTeam1);
             Controls.Add(label_scoreTitle);
-            Controls.Add(picBox_map);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -113,18 +113,16 @@
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)picBox_map).EndInit();
             ((System.ComponentModel.ISupportInitialize)P1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private PictureBox picBox_map;
         private Label label_scoreTitle;
         public PictureBox P1;
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
+        private Button button1;
     }
 }

@@ -12,13 +12,11 @@ namespace Basket_Ball_Game
             obj.UpdateBox();
             obj.Move(x, y);
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY);
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
@@ -26,6 +24,12 @@ namespace Basket_Ball_Game
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            x = x + 100;
+            y = y + 150;
         }
     }
 }

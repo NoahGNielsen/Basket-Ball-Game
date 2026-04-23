@@ -24,7 +24,7 @@ namespace Basket_Ball_Game
 
         public void Move (int x, int y)
         {
-            _form.P1.Location = new Point((GlobalConfig.gameSizeX-x), y);
+            _form.P1.Location = new Point(x, (y + GlobalConfig.gameSizeY - _form.P1.Size.Height));
         }
     }
 }
