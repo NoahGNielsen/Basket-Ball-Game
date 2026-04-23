@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             picBox_map = new PictureBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)picBox_map).BeginInit();
             SuspendLayout();
             // 
@@ -42,11 +43,21 @@
             picBox_map.TabIndex = 1;
             picBox_map.TabStop = false;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(20, 20);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 2;
+            label1.Text = "label1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1804, 985);
+            Controls.Add(label1);
             Controls.Add(picBox_map);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
@@ -60,10 +71,12 @@
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)picBox_map).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private PictureBox picBox_map;
+        private Label label1;
     }
 }
