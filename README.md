@@ -8,7 +8,7 @@
 
 ## Overview
 
-Comming soon, but some school stuff
+A basic basketball game written in C# using .NET 10 and .NET Forms. This is done as a group project in programming B class in high school to learn how to contribe multiple personens on a project and how to use Git and GitHub.
 
 
 ## License
