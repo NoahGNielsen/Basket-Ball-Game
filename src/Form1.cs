@@ -5,6 +5,8 @@ namespace Basket_Ball_Game
         public Form1()
         {
             InitializeComponent();
+            MyClass obj = new MyClass(this);
+            obj.UpdateBox();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
