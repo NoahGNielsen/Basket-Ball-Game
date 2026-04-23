@@ -7,7 +7,7 @@ namespace Basket_Ball_Game
     internal class Player1
     {
         int? speed = GlobalConfig.playerMovementSpeed;
-
+        int? JHigh = GlobalConfig.playerMovementJumpHeight;
 
 
     }
