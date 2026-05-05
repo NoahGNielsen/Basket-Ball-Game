@@ -66,5 +66,9 @@
             updateScoreDisplay();
         }
 
+        static void c //stub, shoud check the ball position and if it is in the goal area, add point to the team that scored. Prob something like 60 times a secound. And also super light weight, so it doesn't lag the game.
+        {
+
+        }
     }
 }
