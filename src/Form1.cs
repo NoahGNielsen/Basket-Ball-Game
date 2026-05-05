@@ -65,8 +65,26 @@ namespace Basket_Ball_Game
             }
             else if (e.KeyCode == Keys.R)
             {
-                ball.VectorMovement(0,0); // (x,y) vector velocity
+                ball.VectorMovement(0, 0); // (x,y) vector velocity
             }
+
+            else if (e.KeyCode == Keys.G)
+            {
+                ball.VectorMovement(-10, 0); // (x,y) vector velocity
+            }
+            else if (e.KeyCode == Keys.J)
+            {
+                ball.VectorMovement(10, 0); // (x,y) vector velocity
+            }
+            else if (e.KeyCode == Keys.Y)
+            {
+                ball.VectorMovement(0, 10); // (x,y) vector velocity
+            }
+            else if (e.KeyCode == Keys.H)
+            {
+                ball.VectorMovement(0, -10); // (x,y) vector velocity
+            }
+
         }
     }
 }
