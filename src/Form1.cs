@@ -13,7 +13,6 @@ namespace Basket_Ball_Game
             InitializeComponent();
             this.KeyPreview = true;
             player1 = new Player1(this);
-            player1.UpdateBox();
             player1.Move(xP1, y);
 
             ball = new Ball(this);
@@ -66,7 +65,7 @@ namespace Basket_Ball_Game
             }
             else if (e.KeyCode == Keys.R)
             {
-                ball.VectorMovement(0,0);
+                ball.VectorMovement(0,0); // (x,y) vector velocity
             }
         }
     }

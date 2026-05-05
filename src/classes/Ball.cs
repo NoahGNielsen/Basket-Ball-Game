@@ -9,10 +9,12 @@ namespace Basket_Ball_Game
     {
         public double bx;
         public double by;
+        public double vX;
+        public double vY;
 
-        double gravity = 0.8;
         double velocityY = 0;
-        double bouncyness = 0.9;
+        double velocityX  = 0;
+
         bool isRunning = false;
 
         private Form1 _form;
@@ -37,8 +39,11 @@ namespace Basket_Ball_Game
         }
 
         // Starts the background thread for physics
-        public void VectorMovement(double vX, double vY)
+        public void VectorMovement(double vx, double vy)
         {
+            vX = vx;
+            vY = -vy;
+
             if (isRunning) return;
 
             isRunning = true;
@@ -49,16 +54,21 @@ namespace Basket_Ball_Game
 
         private void PhysicsLoop()
         {
+            velocityY += vY;
+            velocityX += vX;
+
             while (isRunning)
             {
-                velocityY += gravity;
+                velocityY += GlobalConfig.gravity;
                 by += velocityY;
+                bx += velocityX;
 
                 // Floor detection
                 if (by > GlobalConfig.pFieldY)
                 {
                     by = GlobalConfig.pFieldY; // Sticks it to the floor
-                    velocityY = -velocityY * bouncyness;
+                    velocityY = -velocityY * GlobalConfig.bouncyness;
+                    velocityX = velocityX * GlobalConfig.gFriction;
 
                     // stop bouncing if velocity is too low
                     if (Math.Abs(velocityY) < 1.5)
