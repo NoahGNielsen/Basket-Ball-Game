@@ -2,15 +2,22 @@ namespace Basket_Ball_Game
 {
     public partial class Form1 : Form
     {
-        public int x = 0;
-        public int y = 0;
+        Player1 player1;
+        Ball ball;
+        public int xP1 = 0;
+        public int y = GlobalConfig.pFieldY;
+        public int ballStartingHeight = 200;
 
         public Form1()
         {
             InitializeComponent();
-            Player1 obj = new Player1(this);
-            obj.UpdateBox();
-            obj.Move(x, y);
+            this.KeyPreview = true;
+            player1 = new Player1(this);
+            player1.UpdateBox();
+            player1.Move(xP1, y);
+
+            ball = new Ball(this);
+            ball.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -19,9 +26,9 @@ namespace Basket_Ball_Game
             this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY); //sets window size
 
             // sets ui elements
-            label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2)-label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
-            label_scoreTeam1.Location = new Point(-scoreOffset+((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
-            label_scoreTeam2.Location = new Point(scoreOffset+(GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
+            label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2) - label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
+            label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
+            label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -33,10 +40,34 @@ namespace Basket_Ball_Game
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e) // Debugging
         {
-            x = x + 100;
-            y = y + 150;
+            //button1.BackColor = Color.Red;
+            //x += 100;
+            //y -= 150;
+            //player1.Move(x, y);
+        }
+
+
+        private void Form1_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            // Check if the key pressed is the 'D' key
+            if (e.KeyCode == Keys.D)
+            {
+                // Place your logic here (e.g., move the player right)
+                xP1 += GlobalConfig.playerMovementSpeed;
+                player1.Move(xP1, y);
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                // Place your logic here (e.g., move the player right)
+                xP1 -= GlobalConfig.playerMovementSpeed;
+                player1.Move(xP1, y);
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                ball.VectorMovement();
+            }
         }
     }
 }

@@ -10,6 +10,19 @@ namespace Basket_Ball_Game
         public readonly static int ballMovementSpeed = 5; //default: placeHolder
         public readonly static int gameSizeX = 1822; //default: 1822
         public readonly static int gameSizeY = 1032; //default: 1032
+        public readonly static int pFieldY = 636;
+        public readonly static int gameUpdateRate = 16; //default: 16 (60 times per second)
+
+        //Goal Area Coordinates - Left Hoop
+        public readonly static int team1GoalX1 = 190; //default: placeholder
+        public readonly static int team1GoalX2 = 340; //default: placeholder
+        public readonly static int team1GoalY1 = 360; //default: placeholder
+        public readonly static int team1GoalY2 = 360; //default: placeholder
+        //Goal Area Coordinates - Right Hoop
+        public readonly static int team2GoalX1 = 1445; //default: placeholder
+        public readonly static int team2GoalX2 = 1632; //default: placeholder
+        public readonly static int team2GoalY1 = 360; //default: placeholder
+        public readonly static int team2GoalY2 = 360; //default: placeholder
     }
     internal static class Program
     {
