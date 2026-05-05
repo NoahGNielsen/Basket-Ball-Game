@@ -1,7 +1,7 @@
-﻿using Basket_Ball_Game.methods;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Basket_Ball_Game
 {
@@ -9,54 +9,83 @@ namespace Basket_Ball_Game
     {
         public double bx;
         public double by;
+        public double vX;
+        public double vY;
 
-        double gravity = 9.82;
-        double velocity = 0;
-        double bouncyness = 0.9;
+        double velocityY = 0;
+        double velocityX  = 0;
 
-
-
+        bool isRunning = false;
 
         private Form1 _form;
+        private Thread physicsThread;
 
         public Ball(Form1 form)
         {
             _form = form;
-
-
-        }
-        public void UpdateBox()
-        {
-            // _form.P1.Location = new Point(pX, pY);
         }
 
+        // Sets the starting point and prepares the ball
         public void startP(int x, int y)
         {
-            bx = Convert.ToDouble(x - (_form.picBox_basketBall.Size.Width / 2));
-            by = Convert.ToDouble(y - _form.picBox_basketBall.Size.Height);
-            _form.picBox_basketBall.Location = new Point(Convert.ToInt32(bx), Convert.ToInt32(by));
+            bx = Convert.ToDouble(x - (_form.picBox_basketBall.Width / 2));
+            by = Convert.ToDouble(y - _form.picBox_basketBall.Height);
+
+            // Move it immediately on the UI thread
+            _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
+
+            // Reset velocity for a fresh drop
+            velocityY = 0;
         }
 
-        public void VectorMovement()
+        // Starts the background thread for physics
+        public void VectorMovement(double vx, double vy)
         {
-            while (_form.picBox_basketBall.Location.Y < GlobalConfig.pFieldY)
-            {
-                velocity += gravity;
-                by += +velocity;
-                _form.picBox_basketBall.Location = new Point(Convert.ToInt32(bx), Convert.ToInt32(by));
-            }
+            vX = vx;
+            vY = -vy;
 
-            if (_form.picBox_basketBall.Location.Y > GlobalConfig.pFieldY)
-            {
-                velocity = -velocity * bouncyness;
+            velocityY += vY;
+            velocityX += vX;
 
-                while (velocity >= 1);
+            if (isRunning) return;
+
+            isRunning = true;
+            physicsThread = new Thread(PhysicsLoop);
+            physicsThread.IsBackground = true;
+            physicsThread.Start();
+        }
+
+        private void PhysicsLoop()
+        {
+
+            while (isRunning)
+            {
+                velocityY += GlobalConfig.gravity;
+                by += velocityY;
+                bx += velocityX;
+
+                // Floor detection
+                if (by > GlobalConfig.pFieldY)
                 {
-                    by += +velocity;
-                    _form.picBox_basketBall.Location = new Point(Convert.ToInt32(bx), Convert.ToInt32(by));
-                    velocity += gravity;
-                    VectorMovement();
+                    by = GlobalConfig.pFieldY; // Sticks it to the floor
+                    velocityY = -velocityY * GlobalConfig.bouncyness;
+                    velocityX = velocityX * GlobalConfig.gFriction;
+
+                    // stop bouncing if velocity is too low
+                    if (Math.Abs(velocityY) < 1.5)
+                    {
+                        velocityY = 0;
+                    }
                 }
+
+                if (_form.picBox_basketBall.IsHandleCreated)
+                {
+                    _form.Invoke((MethodInvoker)delegate {
+                        _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
+                    });
+                }
+
+                Thread.Sleep(GlobalConfig.gameUpdateRate);
             }
         }
     }

@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Basket_Ball_Game
 {
-
     public class Player1
     {
-        int? speed = GlobalConfig.playerMovementSpeed;
         int? JHigh = GlobalConfig.playerMovementJumpHeight;
 
+        private int currentX;
+        private int currentY;
+
+        private bool isRunning = false;
+        private Thread playerThread;
         private Form1 _form;
 
         public Player1(Form1 form)
@@ -17,14 +21,42 @@ namespace Basket_Ball_Game
             _form = form;
         }
 
-        public void UpdateBox()
+        public void Move(int x, int y)
         {
-           // _form.P1.Location = new Point(pX, pY);
+            currentX = x;
+            currentY = y - _form.P1.Size.Height;
+
+            if (!isRunning)
+            {
+                StartThread();
+            }
         }
 
-        public void Move (int x, int y)
+        private void StartThread()
         {
-            _form.P1.Location = new Point(x, (y - _form.P1.Size.Height));
+            isRunning = true;
+            playerThread = new Thread(PlayerLoop);
+            playerThread.IsBackground = true;
+            playerThread.Start();
+        }
+
+        private void PlayerLoop()
+        {
+            while (isRunning)
+            {
+                if (_form.P1.IsHandleCreated)
+                {
+                    _form.Invoke((MethodInvoker)delegate {
+                        _form.P1.Location = new Point(currentX, currentY);
+                    });
+                }
+                Thread.Sleep(GlobalConfig.gameUpdateRate);
+            }
+        }
+
+        public void Stop()
+        {
+            isRunning = false;
         }
     }
 }
