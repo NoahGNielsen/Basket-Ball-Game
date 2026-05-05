@@ -21,28 +21,14 @@ namespace Basket_Ball_Game.methods
             _ball = form;
         }
 
-        private static int ballPositionX() //STUB
+        public static int ballPositionX() //STUB
         {
             return -1;
         }
 
-        private static int ballPositionY() //STUB
+        public static int ballPositionY() //STUB
         {
             return -1;
-        }
-
-        public void checkBallPosition()
-        {
-            //get the position of the ball
-            int ballX = ballPositionX();
-            int ballY = ballPositionY();
-
-            //check if the ball is out of bounds
-
-            //check if the ball is in the goal area of team 1
-
-
-            //check if the ball is in the goal area of team 2
         }
     }
 }
