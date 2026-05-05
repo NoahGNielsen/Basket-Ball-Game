@@ -4,7 +4,7 @@ namespace Basket_Ball_Game
     {
         Player1 player1;
         public int x = 0;
-        public int y = 0;
+        public int y = -391;
 
         public Form1()
         {
@@ -37,10 +37,10 @@ namespace Basket_Ball_Game
 
         private void button1_Click_1(object sender, EventArgs e) // Debugging
         {
-            button1.BackColor = Color.Red;
-            x += 100;
-            y -= 150;
-            player1.Move(x, y);
+            //button1.BackColor = Color.Red;
+            //x += 100;
+            //y -= 150;
+            //player1.Move(x, y);
         }
 
 
@@ -56,7 +56,7 @@ namespace Basket_Ball_Game
             else if (e.KeyCode == Keys.A)
             {
                 // Place your logic here (e.g., move the player right)
-                x -= 10;
+                x -= GlobalConfig.playerMovementSpeed;
                 player1.Move(x, y);
             }
         }
