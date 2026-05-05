@@ -38,13 +38,23 @@
         private static Rectangle GetBallBounds()
         {
             Form1? form = Application.OpenForms.OfType<Form1>().FirstOrDefault();
-            if (form == null) return Rectangle.Empty;
+
+            // Form not open yet or already disposed
+            if (form == null || form.IsDisposed) return Rectangle.Empty;
 
             Rectangle bounds = Rectangle.Empty;
-            form.Invoke(new Action(() =>
+            try
             {
-                bounds = form.picBox_basketBall.Bounds;
-            }));
+                form.Invoke(new Action(() =>
+                {
+                    bounds = form.picBox_basketBall.Bounds;
+                }));
+            }
+            catch (ObjectDisposedException)
+            {
+                // Form was disposed between the check and the Invoke, just bail out
+                _running = false;
+            }
             return bounds;
         }
 
@@ -122,13 +132,19 @@
         public static void updateScoreDisplay()
         {
             Form1? form = Application.OpenForms.OfType<Form1>().FirstOrDefault();
-            if (form != null)
+            if (form == null || form.IsDisposed) return;
+
+            try
             {
                 form.Invoke(new Action(() =>
                 {
                     form.label_scoreTeam1.Text = team1Score.ToString();
                     form.label_scoreTeam2.Text = team2Score.ToString();
                 }));
+            }
+            catch (ObjectDisposedException)
+            {
+                // Form closed between check and Invoke, nothing to update
             }
         }
 
