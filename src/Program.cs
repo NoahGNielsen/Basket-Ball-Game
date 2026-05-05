@@ -33,6 +33,7 @@ namespace Basket_Ball_Game
         static void Main()
         {
             Task.Run(() => Startup.Start());
+            gameScoreMngr.StartGoalChecking(this);
             Console.WriteLine("Hello");
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
