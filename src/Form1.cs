@@ -3,8 +3,10 @@ namespace Basket_Ball_Game
     public partial class Form1 : Form
     {
         Player1 player1;
+        Ball ball;
         public int xP1 = 0;
         public int y = GlobalConfig.pFieldY;
+        public int ballStartingHeight = 200;
 
         public Form1()
         {
@@ -13,7 +15,9 @@ namespace Basket_Ball_Game
             player1 = new Player1(this);
             player1.UpdateBox();
             player1.Move(xP1, y);
-            picBox_basketBall.Location = new Point (GlobalConfig.gameSizeX/2, 580);
+
+            ball = new Ball(this);
+            ball.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -59,6 +63,10 @@ namespace Basket_Ball_Game
                 // Place your logic here (e.g., move the player right)
                 xP1 -= GlobalConfig.playerMovementSpeed;
                 player1.Move(xP1, y);
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                ball.VectorMovement();
             }
         }
     }

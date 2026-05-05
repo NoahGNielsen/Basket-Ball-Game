@@ -139,7 +139,7 @@
         public PictureBox P1;
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
-        private PictureBox picBox_basketBall;
         private Button button1;
+        public PictureBox picBox_basketBall;
     }
 }
