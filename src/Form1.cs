@@ -3,8 +3,8 @@ namespace Basket_Ball_Game
     public partial class Form1 : Form
     {
         Player1 player1;
-        public int x = 0;
-        public int y = -391;
+        public int xP1 = 0;
+        public int y = GlobalConfig.pFieldY;
 
         public Form1()
         {
@@ -12,7 +12,8 @@ namespace Basket_Ball_Game
             this.KeyPreview = true;
             player1 = new Player1(this);
             player1.UpdateBox();
-            player1.Move(x, y);
+            player1.Move(xP1, y);
+            picBox_basketBall.Location = new Point (GlobalConfig.gameSizeX/2, 580);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -50,14 +51,14 @@ namespace Basket_Ball_Game
             if (e.KeyCode == Keys.D)
             {
                 // Place your logic here (e.g., move the player right)
-                x += GlobalConfig.playerMovementSpeed;
-                player1.Move(x, y);
+                xP1 += GlobalConfig.playerMovementSpeed;
+                player1.Move(xP1, y);
             }
             else if (e.KeyCode == Keys.A)
             {
                 // Place your logic here (e.g., move the player right)
-                x -= GlobalConfig.playerMovementSpeed;
-                player1.Move(x, y);
+                xP1 -= GlobalConfig.playerMovementSpeed;
+                player1.Move(xP1, y);
             }
         }
     }

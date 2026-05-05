@@ -111,7 +111,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
-            ClientSize = new Size(1381, 805);
+            ClientSize = new Size(1381, 651);
             Controls.Add(button1);
             Controls.Add(picBox_basketBall);
             Controls.Add(P1);
