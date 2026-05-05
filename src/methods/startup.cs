@@ -5,6 +5,8 @@
         public static void Start()
         {
             Console.WriteLine("Hello World");
+            Thread.Sleep(500); // wait for Form1 to open
+            gameScoreMngr.StartGoalChecking();
         }
     }
 }

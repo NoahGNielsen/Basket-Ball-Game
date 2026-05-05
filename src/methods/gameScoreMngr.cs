@@ -7,12 +7,10 @@
 
         private static Thread? _goalCheckThread;
         private static volatile bool _running = false;
-        private static Form1? _form;
 
         // Call this once when the game starts to begin goal detection
-        public static void StartGoalChecking(Form1 form)
+        public static void StartGoalChecking()
         {
-            _form = form;
             _running = true;
 
             _goalCheckThread = new Thread(GoalCheckLoop);
@@ -39,12 +37,13 @@
         // Gets the ball's current bounding rectangle from the UI thread safely
         private static Rectangle GetBallBounds()
         {
-            if (_form == null) return Rectangle.Empty;
+            Form1? form = Application.OpenForms.OfType<Form1>().FirstOrDefault();
+            if (form == null) return Rectangle.Empty;
 
             Rectangle bounds = Rectangle.Empty;
-            _form.Invoke(new Action(() =>
+            form.Invoke(new Action(() =>
             {
-                bounds = _form.picBox_basketBall.Bounds;
+                bounds = form.picBox_basketBall.Bounds;
             }));
             return bounds;
         }
@@ -52,6 +51,9 @@
         // Checks whether the ball center is inside a goal area
         private static bool IsInGoalArea(Point ballCenter, int x1, int y1, int x2, int y2)
         {
+            // Skip check if coordinates haven't been configured yet
+            if (x1 == 0 && x2 == 0 && y1 == 0 && y2 == 0) return false;
+
             int left = Math.Min(x1, x2);
             int right = Math.Max(x1, x2);
             int top = Math.Min(y1, y2);

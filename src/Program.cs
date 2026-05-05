@@ -14,15 +14,15 @@ namespace Basket_Ball_Game
         public readonly static int gameUpdateRate = 16; //default: 16 (60 times per second)
 
         //Goal Area Coordinates - Left Hoop
-        public readonly static int team1GoalX1 = 0; //default: placeholder
-        public readonly static int team1GoalX2 = 0; //default: placeholder
-        public readonly static int team1GoalY1 = 0; //default: placeholder
-        public readonly static int team1GoalY2 = 0; //default: placeholder
+        public readonly static int team1GoalX1 = 190; //default: placeholder
+        public readonly static int team1GoalX2 = 340; //default: placeholder
+        public readonly static int team1GoalY1 = 360; //default: placeholder
+        public readonly static int team1GoalY2 = 360; //default: placeholder
         //Goal Area Coordinates - Right Hoop
-        public readonly static int team2GoalX1 = 0; //default: placeholder
-        public readonly static int team2GoalX2 = 0; //default: placeholder
-        public readonly static int team2GoalY1 = 0; //default: placeholder
-        public readonly static int team2GoalY2 = 0; //default: placeholder
+        public readonly static int team2GoalX1 = 1445; //default: placeholder
+        public readonly static int team2GoalX2 = 1632; //default: placeholder
+        public readonly static int team2GoalY1 = 360; //default: placeholder
+        public readonly static int team2GoalY2 = 360; //default: placeholder
     }
     internal static class Program
     {
@@ -33,7 +33,6 @@ namespace Basket_Ball_Game
         static void Main()
         {
             Task.Run(() => Startup.Start());
-            gameScoreMngr.StartGoalChecking(this);
             Console.WriteLine("Hello");
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
