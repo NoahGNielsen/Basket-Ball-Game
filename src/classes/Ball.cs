@@ -44,6 +44,9 @@ namespace Basket_Ball_Game
             vX = vx;
             vY = -vy;
 
+            velocityY += vY;
+            velocityX += vX;
+
             if (isRunning) return;
 
             isRunning = true;
@@ -54,8 +57,6 @@ namespace Basket_Ball_Game
 
         private void PhysicsLoop()
         {
-            velocityY += vY;
-            velocityX += vX;
 
             while (isRunning)
             {
