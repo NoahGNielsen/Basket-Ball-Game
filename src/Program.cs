@@ -11,7 +11,13 @@ namespace Basket_Ball_Game
         public readonly static int gameSizeX = 1822; //default: 1822
         public readonly static int gameSizeY = 1032; //default: 1032
         public readonly static int pFieldY = 850;
-        public readonly static int gameUpdateRate = 16; //default: 16 (60 times per second)
+        public readonly static int gameUpdateRate = 1000/60; //default: ~16 (60 times per second)
+
+        // Physics elements
+        public readonly static double gFriction = 0.5;
+        public readonly static double bouncyness = 0.9;
+        public readonly static double gravity = 0.8;
+
 
         //Goal Area Coordinates - Left Hoop
         public readonly static int team1GoalX1 = 190; //default: placeholder
