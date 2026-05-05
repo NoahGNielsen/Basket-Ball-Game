@@ -10,7 +10,7 @@ namespace Basket_Ball_Game
         public readonly static int ballMovementSpeed = 5; //default: placeHolder
         public readonly static int gameSizeX = 1822; //default: 1822
         public readonly static int gameSizeY = 1032; //default: 1032
-        public readonly static int pFieldY = 636;
+        public readonly static int pFieldY = 850;
         public readonly static int gameUpdateRate = 16; //default: 16 (60 times per second)
 
         //Goal Area Coordinates - Left Hoop

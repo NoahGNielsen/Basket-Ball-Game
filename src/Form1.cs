@@ -66,7 +66,7 @@ namespace Basket_Ball_Game
             }
             else if (e.KeyCode == Keys.R)
             {
-                ball.VectorMovement();
+                ball.VectorMovement(0,0);
             }
         }
     }
