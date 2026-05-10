@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Basket_Ball_Game
 {
-    public class Ball
+    public class PhysicsThread
     {
         public double bx;
         public double by;
@@ -20,7 +20,27 @@ namespace Basket_Ball_Game
         private Form1 _form;
         private Thread physicsThread;
 
-        public Ball(Form1 form)
+
+        // Player 1
+        public bool moveLeft = false;
+        public bool moveRight = false;
+        public double x1;
+        public double y1;
+        public double vecy1;
+        public bool jump;
+        public bool jumping;
+        public float armAngle1 = 0;
+
+
+
+
+
+
+
+
+
+
+        public PhysicsThread(Form1 form)
         {
             _form = form;
         }
@@ -37,6 +57,26 @@ namespace Basket_Ball_Game
             // Reset velocity for a fresh drop
             velocityY = 0;
         }
+        public void StartEngine()
+        {
+            if (isRunning) return;
+            isRunning = true;
+            physicsThread = new Thread(PhysicsLoop);
+            physicsThread.IsBackground = true;
+            physicsThread.Start();
+        }
+
+        public void moveP1(int x, int y)
+        {
+            x1 = x;
+            y1 = y - _form.P1.Height;
+            // Ensure the engine is running even if the ball hasn't been thrown
+            StartEngine();
+        }
+
+
+
+
 
         // Starts the background thread for physics
         public void VectorMovement(double vx, double vy)
@@ -59,23 +99,45 @@ namespace Basket_Ball_Game
         {
             while (isRunning)
             {
-                //Applying gravity
+
+                if(moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.playerMovementSpeed;
+                if (moveLeft && x1 > 0) x1 -= GlobalConfig.playerMovementSpeed;
+
+
+
+                if (jump && jumping)
+                {
+                    vecy1 = -GlobalConfig.playerMovementJumpHeight;
+                    jumping = false;
+                    jump = false;
+                }
+
+                if (!jumping)
+                {
+                    vecy1 += GlobalConfig.gravity;
+                    y1 += vecy1;
+
+                    // Floor Detection for Player
+                    if (y1 > GlobalConfig.pFieldY - _form.P1.Height)
+                    {
+                        y1 = GlobalConfig.pFieldY - _form.P1.Height;
+                        vecy1 = 0;
+                        jumping = true;
+                    }
+                }
+
+                // BALL PHYSICS
                 velocityY += GlobalConfig.gravity;
-                
-                //Sub-stepping
-                // 8 steps == check pr. 5 pixels
                 int subSteps = 8;
                 double stepX = velocityX / subSteps;
                 double stepY = velocityY / subSteps;
 
                 for (int i = 0; i < subSteps; i++)
                 {
-                    // moving by a fraction of actual speed
                     bx += stepX;
                     by += stepY;
 
-
-                    // Floor detec
+                    // Floor detection
                     if (by > GlobalConfig.pFieldY - _form.picBox_basketBall.Height)
                     {
                         by = GlobalConfig.pFieldY - _form.picBox_basketBall.Height;
@@ -84,63 +146,51 @@ namespace Basket_Ball_Game
                         if (Math.Abs(velocityY) < 1.5) velocityY = 0;
                     }
 
-                    // Wall detec
+                    // Wall detection
                     if (bx < 0) { bx = 0; velocityX = -velocityX * GlobalConfig.bouncyness; }
                     int rightWall = _form.ClientSize.Width - _form.picBox_basketBall.Width;
                     if (bx > rightWall) { bx = rightWall; velocityX = -velocityX * GlobalConfig.bouncyness; }
 
-                    // Backboard detec
-                    CheckBounce(GlobalConfig.BackboardLeft.xL, GlobalConfig.BackboardLeft.xR,
-                                GlobalConfig.BackboardLeft.yT, GlobalConfig.BackboardLeft.yB);
-                    CheckBounce(GlobalConfig.BackboardRight.xL, GlobalConfig.BackboardRight.xR,
-                                GlobalConfig.BackboardRight.yT, GlobalConfig.BackboardRight.yB);
-
-                    // Rim (Left and Right) detec
+                    // Collision checks
+                    CheckBounce(GlobalConfig.BackboardLeft.xL, GlobalConfig.BackboardLeft.xR, GlobalConfig.BackboardLeft.yT, GlobalConfig.BackboardLeft.yB);
+                    CheckBounce(GlobalConfig.BackboardRight.xL, GlobalConfig.BackboardRight.xR, GlobalConfig.BackboardRight.yT, GlobalConfig.BackboardRight.yB);
                     CheckBounce(GlobalConfig.rimLeft.xL, GlobalConfig.rimLeft.xR, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
                     CheckBounce(GlobalConfig.rimLeft.xL2, GlobalConfig.rimLeft.xR2, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
-
                     CheckBounce(GlobalConfig.rimRight.xL, GlobalConfig.rimRight.xR, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
                     CheckBounce(GlobalConfig.rimRight.xL2, GlobalConfig.rimRight.xR2, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
 
-                    //recalculating step size after bounce
                     stepX = velocityX / subSteps;
                     stepY = velocityY / subSteps;
-
-                    double distanceOffScreen = Math.Abs(by);
-                    int simpleHeight = 60 - (int)(distanceOffScreen / 20);
-                    if (simpleHeight < 10) simpleHeight = 10;
-
-                    // 2. Logic Check
-                    bool isOffScreen = (by + _form.picBox_basketBall.Height) < 20;
-
-                    _form.Invoke((MethodInvoker)delegate
-                    {
-                        // 
-                        if (isOffScreen && !_form.LocatorArrow.Visible)
-                        {
-                            _form.LocatorArrow.Visible = true;
-                        }
-                        else if (!isOffScreen && _form.LocatorArrow.Visible)
-                        {
-                            _form.LocatorArrow.Visible = false;
-                        }
-
-                        // Update if the arrow is being shown
-                        if (isOffScreen)
-                        {
-                            _form.LocatorArrow.Height = simpleHeight;
-                            _form.LocatorArrow.Left = (int)bx + (_form.picBox_basketBall.Width / 2) - (_form.LocatorArrow.Width / 2);
-                        }
-                    });
                 }
 
-                    //UI Updater
-                    if (!_form.IsDisposed && _form.picBox_basketBall.IsHandleCreated)
-                {
-                    // displays locator arrow
+                // ARROW LOGIC (Pre-calculate for UI)
+                bool isOffScreen = (by + _form.picBox_basketBall.Height) < 20;
+                int arrowH = 60 - (int)(Math.Abs(by) / 20);
+                if (arrowH < 10) arrowH = 10;
+                int arrowX = (int)bx + (_form.picBox_basketBall.Width / 2) - (_form.LocatorArrow.Width / 2);
 
-                    _form.Invoke((MethodInvoker)delegate {
-                        _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
+                // UI UPDATER (Single Batch Update)
+                //if (!_form.IsDisposed && _form.P1.IsHandleCreated)
+                //{
+                //    _form.BeginInvoke((MethodInvoker)delegate {
+                //        _form.P1.Location = new Point((int)x1, (int)y1);
+                //        _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
+
+                //        // Handle Arrow Visibility and Size
+                //        _form.LocatorArrow.Visible = isOffScreen;
+                //        if (isOffScreen)
+                //        {
+                //            _form.LocatorArrow.Height = arrowH;
+                //            _form.LocatorArrow.Left = arrowX;
+                //        }
+                //    });
+                //}
+
+                if (!_form.IsDisposed && _form.IsHandleCreated)
+                {
+                    _form.BeginInvoke((MethodInvoker)delegate {
+                        // This forces the Form1_Paint event to run
+                        _form.Invalidate();
                     });
                 }
 

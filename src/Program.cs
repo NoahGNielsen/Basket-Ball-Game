@@ -5,13 +5,13 @@ namespace Basket_Ball_Game
         public readonly static bool debugMode = true; //default: false
         public readonly static int pointAddOnGoal = 1; //default: 1
         public readonly static int playerMovementSpeed = 20; //default: placeHolder
-        public readonly static int playerMovementJumpHeight = 30; //default: placeHolder
+        public readonly static int playerMovementJumpHeight = 20; //default: placeHolder
         public readonly static int playerThrowingPower = 10; //default: placeHolder
         public readonly static int ballMovementSpeed = 15; //default: placeHolder
-        public readonly static int gameSizeX = 1822; //default: 1822
-        public readonly static int gameSizeY = 1032; //default: 1032
+        public readonly static int gameSizeX = 1796; //default: 1796
+        public readonly static int gameSizeY = 1031; //default: 1032
         public readonly static int pFieldY = 850;
-        public readonly static int gameUpdateRate = 1000/240; //default: ~16 (60 times per second)
+        public readonly static int gameUpdateRate = 1000/60; //default: ~16 (60 times per second)
 
         // Physics elements
         public readonly static double gFriction = 0.9;  // 0 is the highest
