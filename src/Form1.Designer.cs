@@ -35,8 +35,12 @@
             P1 = new PictureBox();
             picBox_basketBall = new PictureBox();
             button1 = new Button();
+            LocatorArrow = new PictureBox();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LocatorArrow).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label_scoreTitle
@@ -75,6 +79,7 @@
             // 
             // P1
             // 
+            P1.BackColor = Color.Transparent;
             P1.ErrorImage = Properties.Resources.Person_sprite;
             P1.Image = Properties.Resources.Person_sprite;
             P1.InitialImage = Properties.Resources.Person_sprite;
@@ -88,13 +93,15 @@
             // 
             // picBox_basketBall
             // 
+            picBox_basketBall.BackColor = Color.Transparent;
             picBox_basketBall.Image = Properties.Resources.sprite_basketBall;
-            picBox_basketBall.Location = new Point(607, 320);
+            picBox_basketBall.Location = new Point(1012, 422);
             picBox_basketBall.Name = "picBox_basketBall";
             picBox_basketBall.Size = new Size(75, 75);
             picBox_basketBall.SizeMode = PictureBoxSizeMode.StretchImage;
             picBox_basketBall.TabIndex = 6;
             picBox_basketBall.TabStop = false;
+            picBox_basketBall.Click += picBox_basketBall_Click;
             // 
             // button1
             // 
@@ -107,18 +114,39 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
             // 
+            // LocatorArrow
+            // 
+            LocatorArrow.BackColor = Color.Transparent;
+            LocatorArrow.Image = Properties.Resources.Arrow;
+            LocatorArrow.Location = new Point(95, -4);
+            LocatorArrow.Name = "LocatorArrow";
+            LocatorArrow.Size = new Size(48, 63);
+            LocatorArrow.SizeMode = PictureBoxSizeMode.Zoom;
+            LocatorArrow.TabIndex = 8;
+            LocatorArrow.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Transparent;
+            panel1.Controls.Add(LocatorArrow);
+            panel1.Location = new Point(0, 1);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1780, 63);
+            panel1.TabIndex = 9;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
-            ClientSize = new Size(1578, 868);
-            Controls.Add(button1);
+            ClientSize = new Size(1778, 984);
             Controls.Add(picBox_basketBall);
+            Controls.Add(button1);
             Controls.Add(P1);
             Controls.Add(label_scoreTeam2);
             Controls.Add(label_scoreTeam1);
             Controls.Add(label_scoreTitle);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -132,16 +160,21 @@
             KeyDown += Form1_KeyDown_1;
             ((System.ComponentModel.ISupportInitialize)P1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LocatorArrow).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Label label_scoreTitle;
         public PictureBox P1;
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
         private Button button1;
         public PictureBox picBox_basketBall;
+        public PictureBox LocatorArrow;
+        private PictureBox pictureBox1;
+        public Label label_scoreTitle;
+        private Panel panel1;
     }
 }

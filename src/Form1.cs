@@ -2,7 +2,7 @@ namespace Basket_Ball_Game
 {
     public partial class Form1 : Form
     {
-        Player1 player1;
+        //Player1 player1;
         Ball ball;
         public int xP1 = 0;
         public int y = GlobalConfig.pFieldY;
@@ -12,8 +12,8 @@ namespace Basket_Ball_Game
         {
             InitializeComponent();
             this.KeyPreview = true;
-            player1 = new Player1(this);
-            player1.Move(xP1, y);
+            //player1 = new Player1(this);
+            //player1.Move(xP1, y);
 
             ball = new Ball(this);
             ball.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
@@ -24,10 +24,22 @@ namespace Basket_Ball_Game
 
             this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY); //sets window size
 
-            // sets ui elements
+            // sets ui elements posision
             label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2) - label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
             label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
+            
+            // Rotates arrow image
+            LocatorArrow.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            LocatorArrow.Height = 50;
+            LocatorArrow.Hide();
+            LocatorArrow.Refresh();
+
+            picBox_basketBall.BackColor = Color.Transparent;
+            LocatorArrow.BackColor = Color.White;
+            P1.BackColor = Color.Transparent;
+            //P2.BackColor = Color.Transparent;
+
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -55,19 +67,26 @@ namespace Basket_Ball_Game
             {
                 // Place your logic here (e.g., move the player right)
                 xP1 += GlobalConfig.playerMovementSpeed;
-                player1.Move(xP1, y);
+                //player1.Move(xP1, y);
             }
             else if (e.KeyCode == Keys.A)
             {
                 // Place your logic here (e.g., move the player right)
                 xP1 -= GlobalConfig.playerMovementSpeed;
-                player1.Move(xP1, y);
+                //player1.Move(xP1, y);
             }
+            else if (e.KeyCode == Keys.W)
+            {
+                //player1.Jump(true)
+            }
+
             else if (e.KeyCode == Keys.R)
             {
                 ball.VectorMovement(0, 0); // (x,y) vector velocity
             }
 
+
+            // Fuckass debugging ball controll
             else if (e.KeyCode == Keys.G)
             {
                 ball.VectorMovement(-10, 0); // (x,y) vector velocity
@@ -84,6 +103,11 @@ namespace Basket_Ball_Game
             {
                 ball.VectorMovement(0, -10); // (x,y) vector velocity
             }
+
+        }
+
+        private void picBox_basketBall_Click(object sender, EventArgs e)
+        {
 
         }
     }
