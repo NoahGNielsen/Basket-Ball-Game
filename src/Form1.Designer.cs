@@ -34,12 +34,10 @@
             label_scoreTeam2 = new Label();
             P1 = new PictureBox();
             picBox_basketBall = new PictureBox();
-            LocatorArrow = new PictureBox();
-            panel1 = new Panel();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LocatorArrow).BeginInit();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label_scoreTitle
@@ -81,7 +79,7 @@
             P1.ErrorImage = null;
             P1.Image = Properties.Resources.Person_sprite_Scaled_down;
             P1.InitialImage = null;
-            P1.Location = new Point(407, 565);
+            P1.Location = new Point(449, 589);
             P1.Margin = new Padding(3, 4, 3, 4);
             P1.Name = "P1";
             P1.Size = new Size(90, 300);
@@ -101,25 +99,23 @@
             picBox_basketBall.TabStop = false;
             picBox_basketBall.Visible = false;
             // 
-            // LocatorArrow
+            // label1
             // 
-            LocatorArrow.BackColor = Color.Transparent;
-            LocatorArrow.Image = Properties.Resources.Arrow;
-            LocatorArrow.Location = new Point(95, -4);
-            LocatorArrow.Name = "LocatorArrow";
-            LocatorArrow.Size = new Size(48, 63);
-            LocatorArrow.SizeMode = PictureBoxSizeMode.Zoom;
-            LocatorArrow.TabIndex = 8;
-            LocatorArrow.TabStop = false;
+            label1.AutoSize = true;
+            label1.Location = new Point(516, 209);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 10;
+            label1.Text = "label1";
             // 
-            // panel1
+            // label2
             // 
-            panel1.BackColor = Color.Transparent;
-            panel1.Controls.Add(LocatorArrow);
-            panel1.Location = new Point(0, 1);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1780, 63);
-            panel1.TabIndex = 9;
+            label2.AutoSize = true;
+            label2.Location = new Point(572, 228);
+            label2.Name = "label2";
+            label2.Size = new Size(50, 20);
+            label2.TabIndex = 11;
+            label2.Text = "label2";
             // 
             // Form1
             // 
@@ -127,12 +123,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
             ClientSize = new Size(1778, 984);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(picBox_basketBall);
             Controls.Add(P1);
             Controls.Add(label_scoreTeam2);
             Controls.Add(label_scoreTeam1);
             Controls.Add(label_scoreTitle);
-            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -148,8 +145,6 @@
             KeyUp += Form1_KeyUp;
             ((System.ComponentModel.ISupportInitialize)P1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LocatorArrow).EndInit();
-            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -159,8 +154,8 @@
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
         public PictureBox picBox_basketBall;
-        public PictureBox LocatorArrow;
         public Label label_scoreTitle;
-        private Panel panel1;
+        public Label label1;
+        public Label label2;
     }
 }

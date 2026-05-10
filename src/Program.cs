@@ -7,6 +7,7 @@ namespace Basket_Ball_Game
         public readonly static int playerMovementSpeed = 20; //default: placeHolder
         public readonly static int playerMovementJumpHeight = 20; //default: placeHolder
         public readonly static int playerThrowingPower = 10; //default: placeHolder
+        public readonly static int platerArmRotatingSpeed = 4;
         public readonly static int ballMovementSpeed = 15; //default: placeHolder
         public readonly static int gameSizeX = 1796; //default: 1796
         public readonly static int gameSizeY = 1031; //default: 1032

@@ -29,10 +29,14 @@ namespace Basket_Ball_Game
         public double vecy1;
         public bool jump;
         public bool jumping;
-        public float armAngle1 = 0;
 
-
-
+        int armLength = Properties.Resources.Person_arm_Scaled_down.Width;
+        int armCenter = Properties.Resources.Person_arm_Scaled_down.Height/2;
+        public float armAngle1 = 0; //in degrees
+        public bool pitchUp1;
+        public bool pitchDown1;
+        public int armTipX;
+        public int armTipY;
 
 
 
@@ -99,12 +103,24 @@ namespace Basket_Ball_Game
         {
             while (isRunning)
             {
+                // Finding arm tip location
+                double rads = armAngle1 * (Math.PI / 180); // Finding rads
+                armTipY = Convert.ToInt32(y1 + 111 + (armLength * Math.Sin(rads)));
+                armTipX = Convert.ToInt32((x1 + (Properties.Resources.Person_sprite_Scaled_down.Width/2)) + (armLength * Math.Cos(rads)));
 
-                if(moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.playerMovementSpeed;
+
+                // Rotating arms
+                if (pitchUp1) armAngle1 += GlobalConfig.platerArmRotatingSpeed;
+                if (pitchDown1) armAngle1 -= GlobalConfig.platerArmRotatingSpeed;
+
+
+
+                // Moving Player
+                if (moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.playerMovementSpeed;
                 if (moveLeft && x1 > 0) x1 -= GlobalConfig.playerMovementSpeed;
 
 
-
+                // Jump duhh
                 if (jump && jumping)
                 {
                     vecy1 = -GlobalConfig.playerMovementJumpHeight;
@@ -163,33 +179,15 @@ namespace Basket_Ball_Game
                     stepY = velocityY / subSteps;
                 }
 
-                // ARROW LOGIC (Pre-calculate for UI)
-                bool isOffScreen = (by + _form.picBox_basketBall.Height) < 20;
-                int arrowH = 60 - (int)(Math.Abs(by) / 20);
-                if (arrowH < 10) arrowH = 10;
-                int arrowX = (int)bx + (_form.picBox_basketBall.Width / 2) - (_form.LocatorArrow.Width / 2);
-
-                // UI UPDATER (Single Batch Update)
-                //if (!_form.IsDisposed && _form.P1.IsHandleCreated)
-                //{
-                //    _form.BeginInvoke((MethodInvoker)delegate {
-                //        _form.P1.Location = new Point((int)x1, (int)y1);
-                //        _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
-
-                //        // Handle Arrow Visibility and Size
-                //        _form.LocatorArrow.Visible = isOffScreen;
-                //        if (isOffScreen)
-                //        {
-                //            _form.LocatorArrow.Height = arrowH;
-                //            _form.LocatorArrow.Left = arrowX;
-                //        }
-                //    });
-                //}
 
                 if (!_form.IsDisposed && _form.IsHandleCreated)
                 {
                     _form.BeginInvoke((MethodInvoker)delegate {
-                        // This forces the Form1_Paint event to run
+
+
+                        _form.label1.Text = "Hell YEAHHHHH";
+                        _form.label1.Location = new Point(armTipX, armTipY);
+
                         _form.Invalidate();
                     });
                 }

@@ -144,4 +144,7 @@
     <value>..\assets\images\Person arm Scaled down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Arm</comment>
   </data>
+  <data name="Arrow Scaled down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\images\Arrow Scaled down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

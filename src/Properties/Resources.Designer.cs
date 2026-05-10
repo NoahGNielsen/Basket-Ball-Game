@@ -73,6 +73,16 @@ namespace Basket_Ball_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Arrow_Scaled_down {
+            get {
+                object obj = ResourceManager.GetObject("Arrow Scaled down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap map_basketBallCourt {
             get {
                 object obj = ResourceManager.GetObject("map_basketBallCourt", resourceCulture);
