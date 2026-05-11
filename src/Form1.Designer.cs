@@ -34,7 +34,8 @@
             label_scoreTeam2 = new Label();
             P1 = new PictureBox();
             picBox_basketBall = new PictureBox();
-            button1 = new Button();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
             SuspendLayout();
@@ -60,7 +61,6 @@
             label_scoreTeam1.Size = new Size(56, 67);
             label_scoreTeam1.TabIndex = 3;
             label_scoreTeam1.Text = "0";
-            label_scoreTeam1.Click += label1_Click;
             // 
             // label_scoreTeam2
             // 
@@ -75,45 +75,56 @@
             // 
             // P1
             // 
-            P1.ErrorImage = Properties.Resources.Person_sprite;
-            P1.Image = Properties.Resources.Person_sprite;
-            P1.InitialImage = Properties.Resources.Person_sprite;
-            P1.Location = new Point(407, 565);
+            P1.BackColor = Color.Transparent;
+            P1.ErrorImage = null;
+            P1.Image = Properties.Resources.Person_sprite_Scaled_down;
+            P1.InitialImage = null;
+            P1.Location = new Point(449, 589);
             P1.Margin = new Padding(3, 4, 3, 4);
             P1.Name = "P1";
-            P1.Size = new Size(88, 299);
-            P1.SizeMode = PictureBoxSizeMode.Zoom;
+            P1.Size = new Size(90, 300);
             P1.TabIndex = 5;
             P1.TabStop = false;
+            P1.Visible = false;
             // 
             // picBox_basketBall
             // 
+            picBox_basketBall.BackColor = Color.White;
             picBox_basketBall.Image = Properties.Resources.sprite_basketBall;
-            picBox_basketBall.Location = new Point(607, 320);
+            picBox_basketBall.Location = new Point(1012, 422);
             picBox_basketBall.Name = "picBox_basketBall";
             picBox_basketBall.Size = new Size(75, 75);
             picBox_basketBall.SizeMode = PictureBoxSizeMode.StretchImage;
             picBox_basketBall.TabIndex = 6;
             picBox_basketBall.TabStop = false;
+            picBox_basketBall.Visible = false;
             // 
-            // button1
+            // label1
             // 
-            button1.Location = new Point(1473, 380);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(145, 24);
-            button1.TabIndex = 7;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            label1.AutoSize = true;
+            label1.Location = new Point(516, 209);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 10;
+            label1.Text = "label1";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(572, 228);
+            label2.Name = "label2";
+            label2.Size = new Size(50, 20);
+            label2.TabIndex = 11;
+            label2.Text = "label2";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
-            ClientSize = new Size(1578, 868);
-            Controls.Add(button1);
+            ClientSize = new Size(1778, 984);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(picBox_basketBall);
             Controls.Add(P1);
             Controls.Add(label_scoreTeam2);
@@ -129,7 +140,9 @@
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
+            Paint += Form1_Paint;
             KeyDown += Form1_KeyDown_1;
+            KeyUp += Form1_KeyUp;
             ((System.ComponentModel.ISupportInitialize)P1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).EndInit();
             ResumeLayout(false);
@@ -137,11 +150,12 @@
         }
 
         #endregion
-        private Label label_scoreTitle;
         public PictureBox P1;
         internal Label label_scoreTeam1;
         internal Label label_scoreTeam2;
-        private Button button1;
         public PictureBox picBox_basketBall;
+        public Label label_scoreTitle;
+        public Label label1;
+        public Label label2;
     }
 }
