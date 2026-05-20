@@ -110,20 +110,20 @@ namespace Basket_Ball_Game
 
 
                 // Rotating arms
-                if (pitchUp1) armAngle1 += GlobalConfig.platerArmRotatingSpeed;
-                if (pitchDown1) armAngle1 -= GlobalConfig.platerArmRotatingSpeed;
+                if (pitchUp1) armAngle1 += GlobalConfig.Player.armRotatingSpeed;
+                if (pitchDown1) armAngle1 -= GlobalConfig.Player.armRotatingSpeed;
 
 
 
                 // Moving Player
-                if (moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.playerMovementSpeed;
-                if (moveLeft && x1 > 0) x1 -= GlobalConfig.playerMovementSpeed;
+                if (moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.Player.movementSpeed;
+                if (moveLeft && x1 > 0) x1 -= GlobalConfig.Player.movementSpeed;
 
 
                 // Jump duhh
                 if (jump && jumping)
                 {
-                    vecy1 = -GlobalConfig.playerMovementJumpHeight;
+                    vecy1 = -GlobalConfig.Player.jumpHeight;
                     jumping = false;
                     jump = false;
                 }
@@ -196,7 +196,23 @@ namespace Basket_Ball_Game
             }
         }
 
+        private void checkGrab(int x1, int x2, int y1, int y2, double hd1) // checks collision with person and distance to ball
+        {
+            double radius = _form.picBox_basketBall.Width / 2;
+            double centerX = bx + radius;
+            double centerY = by + radius;
 
+            if (x1 <= centerX && x2 >= centerX && y1 <= centerY && y2 >= centerY)
+            {
+                // Collides with player
+            }
+            else if (hd1 <= GlobalConfig.Player.grabDistance)
+            {
+
+            }
+
+
+        }
 
 
         private void CheckBounce(int x1, int x2, int y1, int y2) // Square to circle
