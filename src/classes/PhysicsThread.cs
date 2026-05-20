@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection.Emit;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -7,6 +8,14 @@ namespace Basket_Ball_Game
 {
     public class PhysicsThread
     {
+        public bool deXl;
+        public bool deXr;
+        public bool deYu;
+        public bool deYd;
+        int deX = 0;
+        int deY = 0;
+
+
         public double bx;
         public double by;
         public double vX;
@@ -15,30 +24,51 @@ namespace Basket_Ball_Game
         double velocityY = 0;
         double velocityX  = 0;
 
+        string wasHolding;
         bool isRunning = false;
+        public bool dropBall;
+
 
         private Form1 _form;
         private Thread physicsThread;
 
-
         // Player 1
-        public bool moveLeft = false;
-        public bool moveRight = false;
+        public bool moveLeft1 = false;
+        public bool moveRight1 = false;
         public double x1;
         public double y1;
         public double vecy1;
-        public bool jump;
-        public bool jumping;
+        public bool jump1;
+        public bool jumping1;
 
-        int armLength = Properties.Resources.Person_arm_Scaled_down.Width;
-        int armCenter = Properties.Resources.Person_arm_Scaled_down.Height/2;
+        int armLength1 = Properties.Resources.Person_arm_Scaled_down.Width;
+        bool isHolding1 = false;
         public float armAngle1 = 0; //in degrees
         public bool pitchUp1;
         public bool pitchDown1;
-        public int armTipX;
-        public int armTipY;
+        public int armTipX1;
+        public int armTipY1;
+        public int gCldwn1 = 0; // Grab cooldown
+        public bool greenFN1 = false; // Did he shoot?
 
+        // Player 2
+        public bool moveLeft2 = false;
+        public bool moveRight2 = false;
+        public double x2;
+        public double y2;
+        public double vecy2;
+        public bool jump2;
+        public bool jumping2;
 
+        int armLength2 = Properties.Resources.Person_arm_Scaled_down.Width;
+        bool isHolding2 = false;
+        public float armAngle2 = 180; //in degrees (180 due to being the opposite side of the map)
+        public bool pitchUp2;
+        public bool pitchDown2;
+        public int armTipX2;
+        public int armTipY2;
+        public int gCldwn2 = 0; // Grab cooldown
+        public bool greenFN2 = false; // Did he shoot?
 
 
 
@@ -58,10 +88,10 @@ namespace Basket_Ball_Game
             // Move it immediately on the UI thread
             _form.picBox_basketBall.Location = new Point((int)bx, (int)by);
 
-            // Reset velocity for a fresh drop
+            // Resets velocity for a fresh drop
             velocityY = 0;
         }
-        public void StartEngine()
+        public void StartEngine() // Vroom vroom, "put it in reverse Terry!!"
         {
             if (isRunning) return;
             isRunning = true;
@@ -77,7 +107,13 @@ namespace Basket_Ball_Game
             // Ensure the engine is running even if the ball hasn't been thrown
             StartEngine();
         }
-
+        public void moveP2(int x, int y)
+        {
+            x2 = x;
+            y2 = y - _form.P2.Height;
+            // Ensure the engine is running even if the ball hasn't been thrown
+            StartEngine();
+        }
 
 
 
@@ -103,32 +139,40 @@ namespace Basket_Ball_Game
         {
             while (isRunning)
             {
+                // Debugging locations
+                //if (deXl) deX -= 1;
+                //if (deXr) deX += 1;
+                //if (deYu) deY -= 1;
+                //if (deYd) deY += 1;
+                //_form.label2.Text = "X = " + Convert.ToString(deX) + "; Y = " + Convert.ToString(deY);
+
                 // Finding arm tip location
                 double rads = armAngle1 * (Math.PI / 180); // Finding rads
-                armTipY = Convert.ToInt32(y1 + 111 + (armLength * Math.Sin(rads)));
-                armTipX = Convert.ToInt32((x1 + (Properties.Resources.Person_sprite_Scaled_down.Width/2)) + (armLength * Math.Cos(rads)));
+                armTipY1 = Convert.ToInt32(y1 + 111 + (armLength1 * Math.Sin(rads)));
+                armTipX1 = Convert.ToInt32((x1 + (Properties.Resources.Person_sprite_Scaled_down.Width / 2)) + (armLength1 * Math.Cos(rads)));
+
+                double rads1 = armAngle2 * (Math.PI / 180); // Finding rads
+                armTipY2 = Convert.ToInt32(y2 + 111 + (armLength2 * Math.Sin(rads1)));
+                armTipX2 = Convert.ToInt32((x2 + (Properties.Resources.Person_sprite_Scaled_down.Width / 2)) + (armLength2 * Math.Cos(rads1)));
 
 
                 // Rotating arms
                 if (pitchUp1) armAngle1 += GlobalConfig.Player.armRotatingSpeed;
                 if (pitchDown1) armAngle1 -= GlobalConfig.Player.armRotatingSpeed;
 
-
-
                 // Moving Player
-                if (moveRight && x1 < _form.Width - _form.P1.Width) x1 += GlobalConfig.Player.movementSpeed;
-                if (moveLeft && x1 > 0) x1 -= GlobalConfig.Player.movementSpeed;
-
+                if (moveRight1 && x1 + GlobalConfig.Player.movementSpeed < GlobalConfig.gameSizeX - _form.P1.Width) x1 += GlobalConfig.Player.movementSpeed;
+                if (moveLeft1 && x1 > 0) x1 -= GlobalConfig.Player.movementSpeed;
 
                 // Jump duhh
-                if (jump && jumping)
+                if (jump1 && jumping1)
                 {
                     vecy1 = -GlobalConfig.Player.jumpHeight;
-                    jumping = false;
-                    jump = false;
+                    jumping1 = false;
+                    jump1 = false;
                 }
 
-                if (!jumping)
+                if (!jumping1)
                 {
                     vecy1 += GlobalConfig.gravity;
                     y1 += vecy1;
@@ -138,80 +182,232 @@ namespace Basket_Ball_Game
                     {
                         y1 = GlobalConfig.pFieldY - _form.P1.Height;
                         vecy1 = 0;
-                        jumping = true;
+                        jumping1 = true;
                     }
                 }
 
+
+                // Moving Player 2
+                if (moveRight2 && x2 + GlobalConfig.Player.movementSpeed < GlobalConfig.gameSizeX - _form.P1.Width) x2 += GlobalConfig.Player.movementSpeed;
+                if (moveLeft2 && x2 > 0) x2 -= GlobalConfig.Player.movementSpeed;
+
+                // Rotating arms P2
+                if (pitchUp2) armAngle2 += GlobalConfig.Player.armRotatingSpeed;
+                if (pitchDown2) armAngle2 -= GlobalConfig.Player.armRotatingSpeed;
+
+                // Jump duhh
+                if (jump2 && jumping2)
+                {
+                    vecy2 = -GlobalConfig.Player.jumpHeight;
+                    jumping2 = false;
+                    jump2 = false;
+                }
+
+                if (!jumping2)
+                {
+                    vecy2 += GlobalConfig.gravity;
+                    y2 += vecy2;
+
+                    // Floor Detection for Player
+                    if (y2 > GlobalConfig.pFieldY - _form.P2.Height)
+                    {
+                        y2 = GlobalConfig.pFieldY - _form.P2.Height;
+                        vecy2 = 0;
+                        jumping2 = true;
+                    }
+                }
+
+                // Player collisions
+                if (!isHolding1 && gCldwn1 == 0)
+                {
+                    if (checkGrab(Convert.ToInt32(x1), Convert.ToInt32((x1 + _form.P1.Width)), Convert.ToInt32(y1), Convert.ToInt32((y1 + _form.P1.Height)), armTipX1, armTipY1))
+                    {
+                        // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
+                        velocityX = 0;
+                        velocityY = 0;
+                        if (!isHolding2)
+                            isHolding1 = true;
+                        else if (isHolding2)
+                        {
+                            isHolding2 = false;
+                            gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                            isHolding1 = true;
+                        }
+                    }
+                }
+                else if (dropBall)
+                {
+                    gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                    isHolding1 = false;
+                }
+
+                // Player 2 collisions
+                if (!isHolding2 && gCldwn2 == 0)
+                {
+                    if (checkGrab(Convert.ToInt32(x2), Convert.ToInt32((x2 + _form.P2.Width)), Convert.ToInt32(y2), Convert.ToInt32((y2 + _form.P2.Height)), armTipX2, armTipY2))
+                    {
+                        // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
+                        velocityX = 0;
+                        velocityY = 0;
+
+                        if (!isHolding1)
+                            isHolding2 = true;
+                        else if (isHolding1)
+                        {
+                            isHolding1 = false;
+                            gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                            isHolding2 = true;
+                        }
+                    }
+                }
+                else if (dropBall)
+                {
+                    gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                    isHolding2 = false;
+                }
+
+
+                // Shooting
+                if (isHolding1 && greenFN1)
+                {
+                    isHolding1 = false;
+                    gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                    velocityX = Math.Cos(rads) * GlobalConfig.Player.throwingPower;
+                    velocityY = Math.Sin(rads) * GlobalConfig.Player.throwingPower;
+                }
+
+
+                // Shooting
+                if (isHolding2 && greenFN2)
+                {
+                    isHolding2 = false;
+                    gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                    velocityX = Math.Cos(rads1) * GlobalConfig.Player.throwingPower;
+                    velocityY = Math.Sin(rads1) * GlobalConfig.Player.throwingPower;
+                }
+
+
+
                 // BALL PHYSICS
-                velocityY += GlobalConfig.gravity;
-                int subSteps = 8;
-                double stepX = velocityX / subSteps;
-                double stepY = velocityY / subSteps;
+                if (!isHolding1 || !isHolding2)
+                    velocityY += GlobalConfig.gravity;
+
+                    int subSteps = 8;
+                    double stepX = velocityX / subSteps;
+                    double stepY = velocityY / subSteps;
 
                 for (int i = 0; i < subSteps; i++)
                 {
-                    bx += stepX;
-                    by += stepY;
-
-                    // Floor detection
-                    if (by > GlobalConfig.pFieldY - _form.picBox_basketBall.Height)
+                        bx += stepX;
+                        by += stepY;
+                    if (!isHolding1 || !isHolding2)
                     {
-                        by = GlobalConfig.pFieldY - _form.picBox_basketBall.Height;
-                        velocityY = -velocityY * GlobalConfig.bouncyness;
-                        velocityX = velocityX * GlobalConfig.gFriction;
-                        if (Math.Abs(velocityY) < 1.5) velocityY = 0;
+                        // Floor detectionad
+                        if (by > GlobalConfig.pFieldY - _form.picBox_basketBall.Height)
+                        {
+                            by = GlobalConfig.pFieldY - _form.picBox_basketBall.Height;
+                            velocityY = -velocityY * GlobalConfig.bouncyness;
+                            velocityX = velocityX * GlobalConfig.gFriction;
+                            if (Math.Abs(velocityY) < 1.5) velocityY = 0;
+                        }
+
+                        // Wall detection
+                        if (bx < 0) { bx = 0; velocityX = -velocityX * GlobalConfig.bouncyness; }
+                        int rightWall = _form.ClientSize.Width - _form.picBox_basketBall.Width;
+                        if (bx > rightWall) { bx = rightWall; velocityX = -velocityX * GlobalConfig.bouncyness; }
+
+                        // Collision checks
+                        CheckBounce(GlobalConfig.BackboardLeft.xL, GlobalConfig.BackboardLeft.xR, GlobalConfig.BackboardLeft.yT, GlobalConfig.BackboardLeft.yB);
+                        CheckBounce(GlobalConfig.BackboardRight.xL, GlobalConfig.BackboardRight.xR, GlobalConfig.BackboardRight.yT, GlobalConfig.BackboardRight.yB);
+                        CheckBounce(GlobalConfig.rimLeft.xL, GlobalConfig.rimLeft.xR, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
+                        CheckBounce(GlobalConfig.rimLeft.xL2, GlobalConfig.rimLeft.xR2, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
+                        CheckBounce(GlobalConfig.rimRight.xL, GlobalConfig.rimRight.xR, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
+                        CheckBounce(GlobalConfig.rimRight.xL2, GlobalConfig.rimRight.xR2, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
                     }
-
-                    // Wall detection
-                    if (bx < 0) { bx = 0; velocityX = -velocityX * GlobalConfig.bouncyness; }
-                    int rightWall = _form.ClientSize.Width - _form.picBox_basketBall.Width;
-                    if (bx > rightWall) { bx = rightWall; velocityX = -velocityX * GlobalConfig.bouncyness; }
-
-                    // Collision checks
-                    CheckBounce(GlobalConfig.BackboardLeft.xL, GlobalConfig.BackboardLeft.xR, GlobalConfig.BackboardLeft.yT, GlobalConfig.BackboardLeft.yB);
-                    CheckBounce(GlobalConfig.BackboardRight.xL, GlobalConfig.BackboardRight.xR, GlobalConfig.BackboardRight.yT, GlobalConfig.BackboardRight.yB);
-                    CheckBounce(GlobalConfig.rimLeft.xL, GlobalConfig.rimLeft.xR, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
-                    CheckBounce(GlobalConfig.rimLeft.xL2, GlobalConfig.rimLeft.xR2, GlobalConfig.rimLeft.yT, GlobalConfig.rimLeft.yB);
-                    CheckBounce(GlobalConfig.rimRight.xL, GlobalConfig.rimRight.xR, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
-                    CheckBounce(GlobalConfig.rimRight.xL2, GlobalConfig.rimRight.xR2, GlobalConfig.rimRight.yT, GlobalConfig.rimRight.yB);
-
-                    stepX = velocityX / subSteps;
-                    stepY = velocityY / subSteps;
+                        stepX = velocityX / subSteps;
+                        stepY = velocityY / subSteps;
+                }
+                if (isHolding1)
+                {
+                    bx = armTipX1 - (_form.picBox_basketBall.Width / 2 );
+                    by = armTipY1 - (_form.picBox_basketBall.Height / 2);
                 }
 
+                if (isHolding2)
+                {
+                    bx = armTipX2 - (_form.picBox_basketBall.Width / 2);
+                    by = armTipY2 - (_form.picBox_basketBall.Height / 2);
+                }
 
                 if (!_form.IsDisposed && _form.IsHandleCreated)
                 {
-                    _form.BeginInvoke((MethodInvoker)delegate {
+                    _form.BeginInvoke((MethodInvoker)delegate
+                    {
+                        // Placing cooldown timers
+                        // P1
+                        _form.p1Cooldown.Text = "Cooldown: " + (gCldwn1 / 60.0).ToString("F1") + "s"; // Display cooldown i seconds w 1 decimal place
+                        _form.p1Cooldown.Location = new Point(Convert.ToInt32(x1 + (_form.P1.Width / 2) - (_form.p1Cooldown.Width / 2)), Convert.ToInt32(y1 - _form.p1Cooldown.Height));
+
+                        // P2
+                        _form.p2Cooldown.Text = "Cooldown: " + (gCldwn2 / 60.0).ToString("F1") + "s"; // Display cooldown i seconds w 1 decimal place
+                        _form.p2Cooldown.Location = new Point(Convert.ToInt32(x2 + (_form.P2.Width / 2) - (_form.p2Cooldown.Width / 2)), Convert.ToInt32(y2 - _form.p2Cooldown.Height));
 
 
-                        _form.label1.Text = "Hell YEAHHHHH";
-                        _form.label1.Location = new Point(armTipX, armTipY);
+
+                        //// Debugging locations
+                        //_form.label2.Location = new Point(deX, deY);
+
+                        //_form.label1.Text = Convert.ToString(gCldwn1);
+                        //_form.label1.Location = new Point(armTipX1, armTipY1);
 
                         _form.Invalidate();
                     });
                 }
 
+                if (gCldwn1 > 0)
+                    gCldwn1--;
+                if (gCldwn2 >0)
+                    gCldwn2--;
+                
                 Thread.Sleep(GlobalConfig.gameUpdateRate);
             }
         }
 
-        private void checkGrab(int x1, int x2, int y1, int y2, double hd1) // checks collision with person and distance to ball
+        private bool checkGrab(int x1, int x2, int y1, int y2, int hx, int hy) // checks collision with person and distance to ball
         {
-            double radius = _form.picBox_basketBall.Width / 2;
+            double radius = _form.picBox_basketBall.Width / 2.0;
             double centerX = bx + radius;
             double centerY = by + radius;
 
-            if (x1 <= centerX && x2 >= centerX && y1 <= centerY && y2 >= centerY)
+            // Where are we and where is ball math
+            double closestX = Math.Max(x1, Math.Min(centerX, x2));
+            double closestY = Math.Max(y1, Math.Min(centerY, y2));
+
+            // Calculate distance from the closest point on the box to the ball's center
+            double diffX = centerX - closestX;
+            double diffY = centerY - closestY;
+            double distanceSquared = (diffX * diffX) + (diffY * diffY);
+
+            // Checks if the distance to the ball is less than ballRadius^2 (hitbox's overlapping)
+            if (distanceSquared <= (radius * radius))
             {
-                // Collides with player
+                return true;
             }
-            else if (hd1 <= GlobalConfig.Player.grabDistance)
+
+            // Checks hand collision
+            double hDX = hx - centerX;
+            double hDY = hy - centerY;
+            double handDistSquared = (hDX * hDX) + (hDY * hDY);
+            double maxGrabDistSquared = GlobalConfig.Player.grabDistance * GlobalConfig.Player.grabDistance;
+
+            if (handDistSquared <= maxGrabDistSquared)
             {
-
+                // He reached for it and got that shi
+                return true;
             }
 
-
+            // Didn't collide w nuffin' :(
+            return false;
         }
 
 
