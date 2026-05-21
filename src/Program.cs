@@ -10,6 +10,7 @@ namespace Basket_Ball_Game
         public  static int gameSizeY = 961; //default: 961 (DO NOT CHANGE) (Total height including border 994)
         public readonly static int pFieldY = 850;
         public readonly static int gameUpdateRate = 1000/60; //default: 1000/60 (60 times per second)
+        public readonly static int gameResetTimer = 5; // delay before starting new game
 
         // Player elements:
         public static class Player
@@ -18,7 +19,7 @@ namespace Basket_Ball_Game
             public readonly static int jumpHeight = 20; //default: placeHolder
 
             // Arm
-            public readonly static int grabDistance = 10; // Grab distance in px
+            public readonly static int grabDistance = 35; // Grab distance in px
             public readonly static double reGrabCooldown = 60 * 0.5; // Default: 3s (fps * how many sec cooldown)
             public readonly static int armRotatingSpeed = 4;
             public readonly static int throwingPower = 40; //default: placeHolder

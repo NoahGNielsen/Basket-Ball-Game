@@ -39,6 +39,7 @@
             P2 = new PictureBox();
             p1Cooldown = new Label();
             p2Cooldown = new Label();
+            GameStartTimer = new Label();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
             ((System.ComponentModel.ISupportInitialize)P2).BeginInit();
@@ -154,6 +155,17 @@
             p2Cooldown.TabIndex = 14;
             p2Cooldown.Text = "Cooldown: N/As";
             // 
+            // GameStartTimer
+            // 
+            GameStartTimer.AutoSize = true;
+            GameStartTimer.BackColor = Color.Transparent;
+            GameStartTimer.Font = new Font("Segoe UI", 30F);
+            GameStartTimer.Location = new Point(834, 314);
+            GameStartTimer.Name = "GameStartTimer";
+            GameStartTimer.Size = new Size(56, 67);
+            GameStartTimer.TabIndex = 15;
+            GameStartTimer.Text = "0";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -161,6 +173,7 @@
             BackgroundImage = Properties.Resources.map_basketBallCourt;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1762, 947);
+            Controls.Add(GameStartTimer);
             Controls.Add(p2Cooldown);
             Controls.Add(p1Cooldown);
             Controls.Add(P2);
@@ -203,5 +216,6 @@
         public PictureBox P2;
         public Label p1Cooldown;
         public Label p2Cooldown;
+        public Label GameStartTimer;
     }
 }

@@ -31,10 +31,16 @@ namespace Basket_Ball_Game
             this.KeyPreview = true;
 
             physics = new PhysicsThread(this);
-            physics.VectorMovement(0, 0);
+
+
+            physics.theGreatReset = true;
+            physics.StartEngine();
+            
             physics.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
             physics.moveP1(xP1, y);
             physics.moveP2(xP2 - P2.Width-20, y);
+
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -44,7 +50,8 @@ namespace Basket_Ball_Game
             label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2) - label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
             label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
-            
+            GameStartTimer.Hide();
+
             //Debugging location
             //label2.Location = new Point(0, 0);
             //label2.BackColor = Color.Red;
@@ -74,6 +81,13 @@ namespace Basket_Ball_Game
             if (e.KeyCode == Keys.Oem2) physics.pitchDown2 = true;
             if (e.KeyCode == Keys.Oem6) physics.greenFN2 = true;
 
+            //Resetting
+            if (e.KeyCode == Keys.Y)
+            {
+                physics.Stop();
+            }
+
+
             //Debugging
             if (e.KeyCode == Keys.V) physics.dropBall = true;
             if (e.KeyCode == Keys.G) physics.deXl = true;
@@ -93,16 +107,14 @@ namespace Basket_Ball_Game
             //{
             //    physics.VectorMovement(10, 0); // (x,y) vector velocity
             //}
-            //if (e.KeyCode == Keys.Y)
-            //{
-            //    physics.VectorMovement(0, 10); // (x,y) vector velocity
+
+            // (x,y) vector velocity
             //}
             //if (e.KeyCode == Keys.H)
             //{
             //    physics.VectorMovement(0, -10); // (x,y) vector velocity
             //}
         }
-
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             // Player 1
