@@ -396,10 +396,10 @@ namespace Basket_Ball_Game
 
 
                             //// Debugging locations
-                            _form.label2.Text = (GlobalConfig.gameResetTimer * (1000 / 60)).ToString("F2");
+                            //_form.label2.Text = (GlobalConfig.gameResetTimer * (1000 / 60)).ToString("F2");
                             //_form.label2.Location = new Point(deX, deY);
 
-                            _form.label1.Text = (resetTimeCounter).ToString("F2");
+                            //_form.label1.Text = (resetTimeCounter).ToString("F2");
                             //_form.label1.Location = new Point(armTipX1, armTipY1);
 
                             _form.Invalidate();

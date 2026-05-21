@@ -36,7 +36,7 @@ namespace Basket_Ball_Game
             physics.theGreatReset = true;
             physics.StartEngine();
             
-            physics.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
+            physics.startP((GlobalConfig.gameSizeX - picBox_basketBall.Width) / 2, GlobalConfig.pFieldY - ballStartingHeight);
             physics.moveP1(xP1, y);
             physics.moveP2(xP2 - P2.Width-20, y);
 
@@ -51,6 +51,10 @@ namespace Basket_Ball_Game
             label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
             GameStartTimer.Hide();
+
+            // Debug stuff
+            label1.Hide();
+            label2.Hide();
 
             //Debugging location
             //label2.Location = new Point(0, 0);
