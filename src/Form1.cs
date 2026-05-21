@@ -69,7 +69,7 @@ namespace Basket_Ball_Game
             // Player 2
             if (e.KeyCode == Keys.Right) physics.moveRight2 = true;
             if (e.KeyCode == Keys.Left) physics.moveLeft2 = true;
-            if (e.KeyCode == Keys.Apps) physics.jump2 = true;
+            if (e.KeyCode == Keys.Up) physics.jump2 = true;
             if (e.KeyCode == Keys.OemSemicolon) physics.pitchUp2 = true;
             if (e.KeyCode == Keys.Oem2) physics.pitchDown2 = true;
             if (e.KeyCode == Keys.Oem6) physics.greenFN2 = true;
