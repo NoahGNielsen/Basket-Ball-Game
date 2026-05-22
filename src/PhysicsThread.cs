@@ -22,7 +22,7 @@ namespace Basket_Ball_Game
         public double vX;
         public double vY;
         double lastY;
-        public int broll;
+        public double broll;
 
         int leftScore;
         int rightScore;
