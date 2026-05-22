@@ -22,8 +22,12 @@ namespace Basket_Ball_Game
         public double vX;
         public double vY;
 
+        int leftScore;
+        int rightScore;
+        bool hasScoredonce;
+
         double velocityY = 0;
-        double velocityX  = 0;
+        double velocityX = 0;
 
         bool isRunning = false;
         public bool dropBall;
@@ -31,7 +35,8 @@ namespace Basket_Ball_Game
 
         private Form1 _form;
         private Thread? physicsThread;
-        public bool theGreatReset = false;
+        public bool theGreatReset = false; // full hard reset
+        bool softReset; // does not reset scores
         double resetTimeCounter;
 
         // Player 1
@@ -139,8 +144,9 @@ namespace Basket_Ball_Game
         {
             while (isRunning)
             {
-                try {
-                    if (theGreatReset)
+                try
+                {
+                    if (theGreatReset || softReset)
                     {
                         // Start resetting procedure
                         velocityX = 0;
@@ -156,13 +162,16 @@ namespace Basket_Ball_Game
                         jumping1 = false;
                         jumping2 = false;
 
+                        hasScoredonce = false;
 
 
 
+
+                        // starts the reset timer / play cooldown
                         if ((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter > 0)
                         {
                             _form.GameStartTimer.Show();
-                            _form.GameStartTimer.Text = Convert.ToString(Convert.ToInt32((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter)/(1000/60));
+                            _form.GameStartTimer.Text = Convert.ToString(Convert.ToInt32((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter) / (1000 / 60));
                             _form.GameStartTimer.Location = new Point((GlobalConfig.gameSizeX / 2) - _form.GameStartTimer.Width / 2, _form.label_scoreTeam1.Location.Y);
 
                             resetTimeCounter++;
@@ -171,11 +180,19 @@ namespace Basket_Ball_Game
                         {
                             // Start again
                             theGreatReset = false;
+                            softReset = false;
                             _form.GameStartTimer.Hide();
                             resetTimeCounter = 0;
                             StartEngine();
                         }
+
+                        if (theGreatReset)
+                        {
+                            rightScore = 0;
+                            leftScore = 0;
+                        }
                     }
+
                     else
                     {
                         // Debugging locations
@@ -256,49 +273,7 @@ namespace Basket_Ball_Game
                             }
                         }
 
-                        // Player collisions
-                        if (!isHolding1 && gCldwn1 == 0)
-                        {
-                            if (checkGrab(Convert.ToInt32(x1), Convert.ToInt32((x1 + _form.P1.Width)), Convert.ToInt32(y1), Convert.ToInt32((y1 + _form.P1.Height)), armTipX1, armTipY1))
-                            {
-                                // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
-                                velocityX = 0;
-                                velocityY = 0;
-                                if (!isHolding2)
-                                    isHolding1 = true;
-                                else if (isHolding2)
-                                {
-                                    isHolding2 = false;
-                                    gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
-                                    isHolding1 = true;
-                                }
-                            }
-                        }
-                        else if (dropBall)
-                        {
-                            gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
-                            isHolding1 = false;
-                        }
 
-                        // Player 2 collisions
-                        if (!isHolding2 && gCldwn2 == 0)
-                        {
-                            if (checkGrab(Convert.ToInt32(x2), Convert.ToInt32((x2 + _form.P2.Width)), Convert.ToInt32(y2), Convert.ToInt32((y2 + _form.P2.Height)), armTipX2, armTipY2))
-                            {
-                                // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
-                                velocityX = 0;
-                                velocityY = 0;
-
-                                if (!isHolding1)
-                                    isHolding2 = true;
-                                else if (isHolding1)
-                                {
-                                    isHolding1 = false;
-                                    gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
-                                    isHolding2 = true;
-                                }
-                            }
-                        }
                         else if (dropBall)
                         {
                             gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
@@ -339,6 +314,69 @@ namespace Basket_Ball_Game
                         {
                             bx += stepX;
                             by += stepY;
+
+                            // Player collisions
+                            if (!isHolding1 && gCldwn1 == 0)
+                            {
+                                if (checkGrab(Convert.ToInt32(x1), Convert.ToInt32((x1 + _form.P1.Width)), Convert.ToInt32(y1), Convert.ToInt32((y1 + _form.P1.Height)), armTipX1, armTipY1))
+                                {
+                                    // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
+                                    velocityX = 0;
+                                    velocityY = 0;
+                                    if (!isHolding2)
+                                        isHolding1 = true;
+                                    else if (isHolding2)
+                                    {
+                                        isHolding2 = false;
+                                        gCldwn2 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                                        isHolding1 = true;
+                                    }
+                                }
+                            }
+                            else if (dropBall)
+                            {
+                                gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                                isHolding1 = false;
+                            }
+
+                            // Player 2 collisions
+                            if (!isHolding2 && gCldwn2 == 0)
+                            {
+                                if (checkGrab(Convert.ToInt32(x2), Convert.ToInt32((x2 + _form.P2.Width)), Convert.ToInt32(y2), Convert.ToInt32((y2 + _form.P2.Height)), armTipX2, armTipY2))
+                                {
+                                    // Upon inserting the aforementioned spherical entity into one's grasping appendage, a harmonious union is thereby effectuated, thus yielding a most gratifying conjunction of the orb and the palm.
+                                    velocityX = 0;
+                                    velocityY = 0;
+
+                                    if (!isHolding1)
+                                        isHolding2 = true;
+                                    else if (isHolding1)
+                                    {
+                                        isHolding1 = false;
+                                        gCldwn1 = Convert.ToInt32(GlobalConfig.Player.reGrabCooldown);
+                                        isHolding2 = true;
+                                    }
+                                }
+                            }
+
+                            if (checkGoal(GlobalConfig.rimRight.xL2, GlobalConfig.rimRight.xR, GlobalConfig.rimRight.yB, GlobalConfig.rimRight.yT, velocityY) && !isHolding1 && !isHolding2 && !hasScoredonce) // right goal
+                            {
+                                // Right scored
+                                rightScore++;
+                                hasScoredonce = true;
+                                _form.label_scoreTeam1.Text = (rightScore).ToString();
+                                softReset = true;
+                            }
+                            if (checkGoal(GlobalConfig.rimLeft.xL, GlobalConfig.rimLeft.xL2, GlobalConfig.rimLeft.yB, GlobalConfig.rimLeft.yT, velocityY) && !isHolding1 && !isHolding2 && !hasScoredonce) // left goal
+                            {
+                                // Left scored
+                                leftScore++;
+                                hasScoredonce = true;
+                                _form.label_scoreTeam2.Text = (leftScore).ToString();
+                                softReset = true;
+                            }
+
+
                             if (!isHolding1 || !isHolding2)
                             {
                                 // Floor detectionad
@@ -377,9 +415,9 @@ namespace Basket_Ball_Game
                             bx = armTipX2 - (_form.picBox_basketBall.Width / 2);
                             by = armTipY2 - (_form.picBox_basketBall.Height / 2);
                         }
+
+
                     }
-
-
                     if (!_form.IsDisposed && _form.IsHandleCreated)
                     {
                         _form.BeginInvoke((MethodInvoker)delegate
@@ -417,8 +455,37 @@ namespace Basket_Ball_Game
                 {
                     // so no boom boom when thread closing
                 }
-            }    
+            }
         }
+        private bool checkGoal(int x1, int x2, int y1, int y2, double v) // checks collision with goal and distance to ball
+        {
+            if (v < 0) { return false; }
+            else
+            {
+                double radius = _form.picBox_basketBall.Width / 2.0;
+                double centerX = bx + radius;
+                double centerY = by + radius;
+
+                // Where are goal and where is ball math
+                double closestX = Math.Max(x1, Math.Min(centerX, x2));
+                double closestY = Math.Max(y1, Math.Min(centerY, y2));
+
+                // Calculate distance from the closest point on the goal to the ball's center
+                double diffX = centerX - closestX;
+                double diffY = centerY - closestY;
+                double distanceSquared = (diffX * diffX) + (diffY * diffY);
+
+                // Checks if the distance to the ball is less than ballRadius^2 (hitbox's overlapping)
+                if (distanceSquared <= (radius * radius)/2)
+                {
+                    return true;
+                }
+
+                // Didn't collide w nuffin' :(
+                return false;
+            }
+        }
+
 
         private bool checkGrab(int x1, int x2, int y1, int y2, int hx, int hy) // checks collision with person and distance to ball
         {

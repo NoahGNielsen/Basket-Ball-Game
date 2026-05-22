@@ -211,6 +211,33 @@ namespace Basket_Ball_Game
             // Draw the Arm 
             e.Graphics.DrawImage(Properties.Resources.Person_arm_Scaled_down, 0, -16, 150, 32);
             e.Graphics.Restore(state1);
+
+
+            Graphics g = e.Graphics;
+
+            int left = GlobalConfig.rimRight.xL2;
+            int right = GlobalConfig.rimRight.xR;
+            int top = GlobalConfig.rimRight.yB;
+            int bottom = GlobalConfig.rimRight.yT;
+
+            int width =     right - left;
+            int height =    top - bottom;
+
+            int left2 = GlobalConfig.rimLeft.xL;
+            int right2 = GlobalConfig.rimLeft.xL2;
+            int top2 = GlobalConfig.rimLeft.yB;
+            int bottom2 = GlobalConfig.rimLeft.yT;
+
+            int width2 = right - left;
+            int height2 = top - bottom;
+
+            using (Pen pen = new Pen(Color.Red, 2))
+            {
+                g.DrawRectangle(pen, left, top, width, height);
+                g.DrawRectangle(pen, left2, top2, width2, height2);
+            }
+
+
         }
 
         private void P2_Click(object sender, EventArgs e)
