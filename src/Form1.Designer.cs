@@ -194,9 +194,9 @@
             tMidCon.AutoSize = true;
             tMidCon.Location = new Point(884, 29);
             tMidCon.Name = "tMidCon";
-            tMidCon.Size = new Size(171, 20);
+            tMidCon.Size = new Size(174, 20);
             tMidCon.TabIndex = 18;
-            tMidCon.Text = "Y = reset score and reset";
+            tMidCon.Text = "Y = Reset player and ball";
             // 
             // startGameCon
             // 

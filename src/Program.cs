@@ -1,31 +1,37 @@
 namespace Basket_Ball_Game
 {
-    public class GlobalConfig //settings
+    public static class GlobalConfig //settings
     {
+        // Very fun boolean
+        public readonly static bool Chernobyl_V2 = false; // set to true if you want a visual representation of Chernobyl in task manager
+        // Did you try setting it to true and looking in task manager?
+        // Sure?
+        // Very sure?
+
         public static int gameSizeX = 1780; //default: 1780 (DO NOT CHANGE)
-        public  static int gameSizeY = 961; //default: 961 (DO NOT CHANGE) (Total height including border 994)
+        public static int gameSizeY = 961; //default: 961 (DO NOT CHANGE) (Total height including border 994)
         public readonly static int pFieldY = 850;
         public readonly static int gameUpdateRate = 1000/60; //default: 1000/60 (60 times per second)
-        public readonly static int gameResetTimer = 5; // delay before starting new game
+        public readonly static int gameResetTimer = 5; // delay before starting new game Default: 5
 
         // Player elements:
         public static class Player
         {
-            public readonly static int movementSpeed = 20; //default: placeHolder
-            public readonly static int jumpHeight = 20; //default: placeHolder
+            public readonly static int movementSpeed = 20; //default: 20
+            public readonly static int jumpHeight = 25; //default: 25
 
             // Arm
             public readonly static int grabDistance = 35; // Grab distance in px
-            public readonly static double reGrabCooldown = 60 * 0.5; // Default: 3s (fps * how many sec cooldown)
-            public readonly static int armRotatingSpeed = 4;
-            public readonly static int throwingPower = 40; //default: placeHolder
+            public readonly static double reGrabCooldown = 60 * 0.5; // Default: 0.5s (fps * how many sec cooldown)
+            public readonly static int armRotatingSpeed = 4; // default = 4
+            public readonly static int throwingPower = 40; //default: 40
         }
 
         // Physics elements
-        public readonly static double gFriction = 0.9;  // 0 is the highest
-        public readonly static double airRes = 0.1;  // 0 is the highest
-        public readonly static double bouncyness = 0.8; // 0 == no bouncing
-        public readonly static double gravity = 1.8;    // bigger == more gravity  
+        public readonly static double gFriction = 0.9;  // 0 is the highest         Default: 0.9
+        public readonly static double airRes = 0.1;  // 0 is the highest            Default: 0.1
+        public readonly static double bouncyness = 0.85; // 0 == no bouncing        Default: 0.85
+        public readonly static double gravity = 1.8;    // bigger == more gravity   Default: 1.8
 
         public static class BackboardLeft 
         {

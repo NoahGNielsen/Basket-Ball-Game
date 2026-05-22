@@ -494,12 +494,19 @@ namespace Basket_Ball_Game
 
                     lastY = by;
 
+                    if (!GlobalConfig.Chernobyl_V2)
+                    {
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        GC.Collect();
+                    }
 
                     Thread.Sleep(GlobalConfig.gameUpdateRate);
                 }
                 catch
                 {
                     // so no boom boom when thread closing
+                    MessageBox.Show("   Ooops");
                 }
             }
         }
