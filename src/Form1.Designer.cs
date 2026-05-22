@@ -44,6 +44,7 @@
             p2Con = new Label();
             tMidCon = new Label();
             startGameCon = new Label();
+            Chernobyl = new Label();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
             ((System.ComponentModel.ISupportInitialize)P2).BeginInit();
@@ -208,12 +209,27 @@
             startGameCon.TabIndex = 19;
             startGameCon.Text = "Press T to start game";
             // 
+            // Chernobyl
+            // 
+            Chernobyl.Location = new Point(0, 900);
+            Chernobyl.Name = "Chernobyl";
+            Chernobyl.Size = new Size(1762, 80);
+            Chernobyl.Font = new Font("Segoe UI", 25f, FontStyle.Regular);
+            Chernobyl.TabIndex = 20;
+            Chernobyl.Dock = DockStyle.Bottom;
+            Chernobyl.Height = 80;            
+            Chernobyl.Text = "☢ CHERNOBYL ACTIVE ☢";              
+            Chernobyl.BackColor = Color.FromArgb(30, 30, 30);
+            Chernobyl.ForeColor = Color.Red;
+            Chernobyl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1762, 947);
+            Controls.Add(Chernobyl);
             Controls.Add(startGameCon);
             Controls.Add(tMidCon);
             Controls.Add(p2Con);
@@ -266,5 +282,7 @@
         private Label p2Con;
         private Label tMidCon;
         private Label startGameCon;
+        public Label Chernobyl;
+        private Label label3;
     }
 }

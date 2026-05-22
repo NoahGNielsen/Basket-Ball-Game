@@ -1,9 +1,9 @@
 namespace Basket_Ball_Game
 {
-    public static class GlobalConfig //settings
+    public class GlobalConfig //settings
     {
         // Very fun boolean
-        public readonly static bool Chernobyl_V2 = false; // set to true if you want a visual representation of Chernobyl in task manager
+        public static bool Chernobyl_V2 = false; // set to true if you want a visual representation of Chernobyl in task manager
         // Did you try setting it to true and looking in task manager?
         // Sure?
         // Very sure?

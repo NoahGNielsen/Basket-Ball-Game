@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Basket_Ball_Game
 {
     public partial class Form1 : Form
@@ -15,8 +17,8 @@ namespace Basket_Ball_Game
             // le holy grail
             //
             this.Text = "Thy utmost exquisite festive exhibition of projectiles, wherein spherical entities are deliberately propelled through the air"; // NO QUESTIONS
-                                                                                                                                                         //
-                                                                                                                                                         // these lines are dedecated to praise 'le name'
+            //
+            // these lines are dedecated to praise 'le name'
 
             this.ClientSize = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY);
             GlobalConfig.gameSizeX = this.ClientSize.Width;
@@ -67,6 +69,7 @@ namespace Basket_Ball_Game
             p2Con.Text = ":Controls \nArrow Left = Left \nArrow Right = Right \nArrow Up = Jump \n^ or ¨ = Arm Up \n' or * = Arm Down \nÅ = Throw Ball";
             p2Con.Location = new Point(GlobalConfig.gameSizeX - 10 - p2Con.Width, 80);
             p2Con.BackColor = Color.White;
+            Chernobyl.Hide();
 
             // Debug stuff
             label1.Hide(); // Hidden by default
@@ -81,8 +84,10 @@ namespace Basket_Ball_Game
             //P2.BackColor = Color.Transparent;
 
         }
-
-
+        
+        // For 'Fun'
+        bool shiftDown, tabDown;
+        
         private void Form1_KeyDown_1(object sender, KeyEventArgs e)
         {
             // Player 1
@@ -113,6 +118,23 @@ namespace Basket_Ball_Game
                 startGameCon.Hide();
                 start = true;
             }
+
+            // FUN {
+            if (e.KeyCode == Keys.Shift && (e.KeyCode == Keys.Tab) && e.KeyCode == Keys.F)
+            {
+                GlobalConfig.Chernobyl_V2 = !GlobalConfig.Chernobyl_V2;
+            }
+
+            if (e.KeyCode == Keys.ShiftKey) shiftDown = true;
+            if (e.KeyCode == Keys.Tab) tabDown = true;
+
+            if (shiftDown && tabDown && e.KeyCode == Keys.F)
+            {
+                GlobalConfig.Chernobyl_V2 = !GlobalConfig.Chernobyl_V2;
+            }
+
+            //} FUN stops :(
+
 
             ////Debugging
             //if (e.KeyCode == Keys.V) physics.dropBall = true;
@@ -159,6 +181,10 @@ namespace Basket_Ball_Game
             if (e.KeyCode == Keys.OemSemicolon) physics.pitchUp2 = false;
             if (e.KeyCode == Keys.Oem2) physics.pitchDown2 = false;
             if (e.KeyCode == Keys.Oem6) physics.greenFN2 = false;
+
+            // FUN
+            if (e.KeyCode == Keys.ShiftKey) shiftDown = false;
+            if (e.KeyCode == Keys.Tab) tabDown = false;
 
 
             //// Debugging

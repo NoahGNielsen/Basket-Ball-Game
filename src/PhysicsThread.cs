@@ -9,6 +9,7 @@ namespace Basket_Ball_Game
 {
     public class PhysicsThread
     {
+
         public bool deXl;
         public bool deXr;
         public bool deYu;
@@ -142,6 +143,8 @@ namespace Basket_Ball_Game
             velocityX += vX;
             StartEngine();
         }
+
+        int n = 0;
 
         private void PhysicsLoop()
         {
@@ -494,11 +497,30 @@ namespace Basket_Ball_Game
 
                     lastY = by;
 
+
+
                     if (!GlobalConfig.Chernobyl_V2)
                     {
                         GC.Collect();
                         GC.WaitForPendingFinalizers();
                         GC.Collect();
+                        _form.Chernobyl.Hide();
+                    }
+                    else
+                    {
+                        _form.Chernobyl.Show();
+                        if (n <=10)
+                        {
+                            _form.Chernobyl.ForeColor = Color.Orange;
+                            n++;
+                        }
+                        else if (n <= 20)
+                        {
+                            _form.Chernobyl.ForeColor = Color.Red;
+                            n++;
+                        }
+                        if (n > 20)
+                            n = 0;
                     }
 
                     Thread.Sleep(GlobalConfig.gameUpdateRate);
