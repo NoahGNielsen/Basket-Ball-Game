@@ -167,8 +167,7 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1762, 947);
@@ -185,7 +184,6 @@
             Controls.Add(label_scoreTitle);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            FormScreenCaptureMode = ScreenCaptureMode.HideWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
@@ -193,6 +191,7 @@
             MinimizeBox = false;
             Name = "Form1";
             Text = "Form1";
+            TransparencyKey = Color.FromArgb(255, 224, 192);
             Load += Form1_Load;
             Paint += Form1_Paint;
             KeyDown += Form1_KeyDown_1;

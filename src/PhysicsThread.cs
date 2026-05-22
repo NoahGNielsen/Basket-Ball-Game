@@ -22,7 +22,7 @@ namespace Basket_Ball_Game
         public double vX;
         public double vY;
         double lastY;
-        public double broll;
+        public double broll; // Abrreviation of breadroll           // trust
 
         int leftScore;
         int rightScore;

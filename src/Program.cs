@@ -24,7 +24,7 @@ namespace Basket_Ball_Game
         // Physics elements
         public readonly static double gFriction = 0.9;  // 0 is the highest
         public readonly static double airRes = 0.1;  // 0 is the highest
-        public readonly static double bouncyness = 0.1; // 0 == no bouncing
+        public readonly static double bouncyness = 0.8; // 0 == no bouncing
         public readonly static double gravity = 1.8;    // bigger == more gravity  
 
         public static class BackboardLeft 
