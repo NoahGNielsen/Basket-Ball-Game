@@ -7,7 +7,7 @@ namespace Basket_Ball_Game
         public int xP2 = 1790;
         public int y;
         public int ballStartingHeight = 200;
-
+        public bool start;
         public Form1()
         {
             InitializeComponent();
@@ -52,6 +52,8 @@ namespace Basket_Ball_Game
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
             GameStartTimer.Hide();
 
+
+
             // Debug stuff
             label1.Hide();
             label2.Hide();
@@ -91,18 +93,23 @@ namespace Basket_Ball_Game
                 physics.Stop();
             }
 
+            //Starting
+            if (e.KeyCode == Keys.T)
+            {
+                start = true;
+            }
 
-            //Debugging
-            if (e.KeyCode == Keys.V) physics.dropBall = true;
-            if (e.KeyCode == Keys.G) physics.deXl = true;
-            if (e.KeyCode == Keys.J) physics.deXr = true;
-            if (e.KeyCode == Keys.Y) physics.deYu = true;
-            if (e.KeyCode == Keys.H) physics.deYd = true;
+            ////Debugging
+            //if (e.KeyCode == Keys.V) physics.dropBall = true;
+            //if (e.KeyCode == Keys.G) physics.deXl = true;
+            //if (e.KeyCode == Keys.J) physics.deXr = true;
+            //if (e.KeyCode == Keys.Y) physics.deYu = true;
+            //if (e.KeyCode == Keys.H) physics.deYd = true;
 
             // Key debugging
             //label2.Text = Convert.ToString(e.KeyCode);
 
-            //// Fuckass debugging ball controll
+            //// Debugging ball controll
             //if (e.KeyCode == Keys.G)
             //{
             //    physics.VectorMovement(-10, 0); // (x,y) vector velocity
@@ -139,12 +146,12 @@ namespace Basket_Ball_Game
             if (e.KeyCode == Keys.Oem6) physics.greenFN2 = false;
 
 
-            // Debugging
-            if (e.KeyCode == Keys.G) physics.deXl = false;
-            if (e.KeyCode == Keys.J) physics.deXr = false;
-            if (e.KeyCode == Keys.Y) physics.deYu = false;
-            if (e.KeyCode == Keys.H) physics.deYd = false;
-            if (e.KeyCode == Keys.V) physics.dropBall = false;
+            //// Debugging
+            //if (e.KeyCode == Keys.G) physics.deXl = false;
+            //if (e.KeyCode == Keys.J) physics.deXr = false;
+            //if (e.KeyCode == Keys.Y) physics.deYu = false;
+            //if (e.KeyCode == Keys.H) physics.deYd = false;
+            //if (e.KeyCode == Keys.V) physics.dropBall = false;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -152,10 +159,35 @@ namespace Basket_Ball_Game
 
             if (physics == null) return;
 
-            //Drawing the Ball
-            e.Graphics.DrawImage(Properties.Resources.sprite_basketBall,
-                (int)physics.bx, (int)physics.by,
-                75, 75);
+            //Drawing the Ball w rolling
+            var stateb = e.Graphics.Save();
+
+            float x = (float)physics.bx;
+            float y = (float)physics.by;
+            float size = 75f;
+
+            // Move origin to center of the ball
+            e.Graphics.TranslateTransform(
+                x + size / 2f,
+                y + size / 2f
+            );
+
+            // Rotate (degrees)
+            e.Graphics.RotateTransform((float)physics.broll);
+
+            // Move origin back
+            e.Graphics.TranslateTransform(-size / 2f, -size / 2f);
+
+            // Draw ball
+            e.Graphics.DrawImage(
+                Properties.Resources.sprite_basketBall,
+                0f,
+                0f,
+                size,
+                size
+            );
+
+            e.Graphics.Restore(stateb);
 
             //Drawing the Player 1
             e.Graphics.DrawImage(Properties.Resources.Person_sprite_Scaled_down,
@@ -211,38 +243,6 @@ namespace Basket_Ball_Game
             // Draw the Arm 
             e.Graphics.DrawImage(Properties.Resources.Person_arm_Scaled_down, 0, -16, 150, 32);
             e.Graphics.Restore(state1);
-
-
-            Graphics g = e.Graphics;
-
-            int left = GlobalConfig.rimRight.xL2;
-            int right = GlobalConfig.rimRight.xR;
-            int top = GlobalConfig.rimRight.yB;
-            int bottom = GlobalConfig.rimRight.yT;
-
-            int width =     right - left;
-            int height =    top - bottom;
-
-            int left2 = GlobalConfig.rimLeft.xL;
-            int right2 = GlobalConfig.rimLeft.xL2;
-            int top2 = GlobalConfig.rimLeft.yB;
-            int bottom2 = GlobalConfig.rimLeft.yT;
-
-            int width2 = right - left;
-            int height2 = top - bottom;
-
-            using (Pen pen = new Pen(Color.Red, 2))
-            {
-                g.DrawRectangle(pen, left, top, width, height);
-                g.DrawRectangle(pen, left2, top2, width2, height2);
-            }
-
-
-        }
-
-        private void P2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

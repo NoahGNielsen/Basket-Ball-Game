@@ -135,7 +135,6 @@
             P2.TabIndex = 12;
             P2.TabStop = false;
             P2.Visible = false;
-            P2.Click += P2_Click;
             // 
             // p1Cooldown
             // 

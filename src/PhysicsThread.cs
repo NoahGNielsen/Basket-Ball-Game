@@ -21,6 +21,8 @@ namespace Basket_Ball_Game
         public double by;
         public double vX;
         public double vY;
+        double lastY;
+        public int broll;
 
         int leftScore;
         int rightScore;
@@ -31,7 +33,6 @@ namespace Basket_Ball_Game
 
         bool isRunning = false;
         public bool dropBall;
-
 
         private Form1 _form;
         private Thread? physicsThread;
@@ -155,6 +156,15 @@ namespace Basket_Ball_Game
                         moveP2(_form.xP2 - _form.P2.Width - 20, _form.y);
                         startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - _form.ballStartingHeight);
 
+                        // Reseting cooldown timer locations
+                        // P1
+                        _form.p1Cooldown.Text = "Cooldown: " + (gCldwn1 / 60.0).ToString("F1") + "s"; // Display cooldown i seconds w 1 decimal place
+                        _form.p1Cooldown.Location = new Point(Convert.ToInt32(x1 + (_form.P1.Width / 2) - (_form.p1Cooldown.Width / 2)), Convert.ToInt32(y1 - _form.p1Cooldown.Height));
+
+                        // P2
+                        _form.p2Cooldown.Text = "Cooldown: " + (gCldwn2 / 60.0).ToString("F1") + "s"; // Display cooldown i seconds w 1 decimal place
+                        _form.p2Cooldown.Location = new Point(Convert.ToInt32(x2 + (_form.P2.Width / 2) - (_form.p2Cooldown.Width / 2)), Convert.ToInt32(y2 - _form.p2Cooldown.Height));
+
                         armAngle1 = 0;
                         armAngle2 = 180;
                         isHolding1 = false;
@@ -164,7 +174,10 @@ namespace Basket_Ball_Game
 
                         hasScoredonce = false;
 
-
+                        while (!_form.start)
+                        {
+                            Thread.Sleep(50);
+                        }
 
 
                         // starts the reset timer / play cooldown
@@ -315,6 +328,9 @@ namespace Basket_Ball_Game
                             bx += stepX;
                             by += stepY;
 
+
+
+
                             // Player collisions
                             if (!isHolding1 && gCldwn1 == 0)
                             {
@@ -379,13 +395,25 @@ namespace Basket_Ball_Game
 
                             if (!isHolding1 || !isHolding2)
                             {
-                                // Floor detectionad
+                                // Floor detctionad (Holy stroke)
                                 if (by > GlobalConfig.pFieldY - _form.picBox_basketBall.Height)
                                 {
                                     by = GlobalConfig.pFieldY - _form.picBox_basketBall.Height;
                                     velocityY = -velocityY * GlobalConfig.bouncyness;
-                                    velocityX = velocityX * GlobalConfig.gFriction;
+                                    if (lastY == by)
+                                    {
+                                        velocityX = velocityX * (0.975);
+                                        if (velocityX > 0.00 || velocityX < 0.00)
+                                            broll += Convert.ToInt32(velocityX);
+                                    }
+                                    else
+                                        velocityX = velocityX * GlobalConfig.gFriction;
                                     if (Math.Abs(velocityY) < 1.5) velocityY = 0;
+                                }
+                                else
+                                {
+                                    broll += Convert.ToInt32(velocityX * GlobalConfig.airRes);
+                                    velocityX = velocityX - (velocityX * Math.Pow(GlobalConfig.airRes, 4));
                                 }
 
                                 // Wall detection
@@ -404,6 +432,7 @@ namespace Basket_Ball_Game
                             stepX = velocityX / subSteps;
                             stepY = velocityY / subSteps;
                         }
+
                         if (isHolding1)
                         {
                             bx = armTipX1 - (_form.picBox_basketBall.Width / 2);
@@ -449,6 +478,9 @@ namespace Basket_Ball_Game
                     if (gCldwn2 > 0)
                         gCldwn2--;
 
+                    lastY = by;
+
+
                     Thread.Sleep(GlobalConfig.gameUpdateRate);
                 }
                 catch
@@ -476,7 +508,7 @@ namespace Basket_Ball_Game
                 double distanceSquared = (diffX * diffX) + (diffY * diffY);
 
                 // Checks if the distance to the ball is less than ballRadius^2 (hitbox's overlapping)
-                if (distanceSquared <= (radius * radius)/2)
+                if (distanceSquared <= (radius * radius) / 2)
                 {
                     return true;
                 }

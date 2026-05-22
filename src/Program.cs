@@ -2,10 +2,6 @@ namespace Basket_Ball_Game
 {
     public class GlobalConfig //settings
     {
-        public readonly static bool debugMode = true; //default: false
-        public readonly static int pointAddOnGoal = 1; //default: 1
-        public readonly static int ballMovementSpeed = 15; //default: placeHolder
-
         public static int gameSizeX = 1780; //default: 1780 (DO NOT CHANGE)
         public  static int gameSizeY = 961; //default: 961 (DO NOT CHANGE) (Total height including border 994)
         public readonly static int pFieldY = 850;
@@ -27,7 +23,8 @@ namespace Basket_Ball_Game
 
         // Physics elements
         public readonly static double gFriction = 0.9;  // 0 is the highest
-        public readonly static double bouncyness = 0.9; // 0 == no bouncing
+        public readonly static double airRes = 0.1;  // 0 is the highest
+        public readonly static double bouncyness = 0.1; // 0 == no bouncing
         public readonly static double gravity = 1.8;    // bigger == more gravity  
 
         public static class BackboardLeft 
@@ -66,18 +63,6 @@ namespace Basket_Ball_Game
             public readonly static int yB = 350;    //top y default: 350
             public readonly static int yT = 340;    //bottom y default: 340
         }
-
-
-        //Goal Area Coordinates - Left Hoop
-        public readonly static int team1GoalX1 = 190; //default: 190
-        public readonly static int team1GoalX2 = 340; //default: 340
-        public readonly static int team1GoalY1 = 360; //default: 360
-        public readonly static int team1GoalY2 = 360; //default: 360
-        //Goal Area Coordinates - Right Hoop
-        public readonly static int team2GoalX1 = 1445; //default: 1445
-        public readonly static int team2GoalX2 = 1600; //default: 1600
-        public readonly static int team2GoalY1 = 360; //default: 360
-        public readonly static int team2GoalY2 = 360; //default: 360
     }
     internal static class Program
     {
