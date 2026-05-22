@@ -1,15 +1,29 @@
+using System.Reflection;
+
 namespace Basket_Ball_Game
 {
     public partial class Form1 : Form
     {
         PhysicsThread physics;
         public int xP1 = 0;
-        public int y = GlobalConfig.pFieldY;
+        public int xP2 = 1790;
+        public int y;
         public int ballStartingHeight = 200;
-
+        public bool start;
         public Form1()
         {
             InitializeComponent();
+
+            // le holy grail
+            //
+            this.Text = "Thy utmost exquisite festive exhibition of projectiles, wherein spherical entities are deliberately propelled through the air"; // NO QUESTIONS
+            //
+            // these lines are dedecated to praise 'le name'
+
+            this.ClientSize = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY);
+            GlobalConfig.gameSizeX = this.ClientSize.Width;
+
+            y = GlobalConfig.pFieldY;
 
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
@@ -19,72 +33,166 @@ namespace Basket_Ball_Game
             this.KeyPreview = true;
 
             physics = new PhysicsThread(this);
-            physics.VectorMovement(0, 0);
-            physics.startP(GlobalConfig.gameSizeX / 2, GlobalConfig.pFieldY - ballStartingHeight);
+
+
+            physics.theGreatReset = true;
+            physics.StartEngine();
+
+            physics.startP((GlobalConfig.gameSizeX - picBox_basketBall.Width) / 2, GlobalConfig.pFieldY - ballStartingHeight);
             physics.moveP1(xP1, y);
+            physics.moveP2(xP2 - P2.Width - 20, y);
+
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             int scoreOffset = 100; // in px
 
-            this.Size = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY); //sets window size
-
             // sets ui elements posision
             label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2) - label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
+
+            startGameCon.Location = new Point((GlobalConfig.gameSizeX - startGameCon.Width) / 2, (GlobalConfig.gameSizeY - startGameCon.Height) / 2 - 100);
+            startGameCon.BackColor = Color.White;
+
+            tMidCon.Location = new Point((GlobalConfig.gameSizeX - tMidCon.Width) / 2, label_scoreTitle.Location.Y - (label_scoreTitle.Height));
+            tMidCon.BackColor = Color.White;
+
             label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
+
+            GameStartTimer.Hide();
+
+            p1Con.Text = "Controls: \nA = Left \nD = Right \nSpace = Jump \nShift = Arm Up \nControl = Arm Down \nF = Throw Ball";
+            p1Con.Location = new Point(10, 80);
+            p1Con.BackColor = Color.White;
+
+            p2Con.Text = ":Controls \nArrow Left = Left \nArrow Right = Right \nArrow Up = Jump \n^ or ¨ = Arm Up \n' or * = Arm Down \nÅ = Throw Ball";
+            p2Con.Location = new Point(GlobalConfig.gameSizeX - 10 - p2Con.Width, 80);
+            p2Con.BackColor = Color.White;
+            Chernobyl.Hide();
+
+            // Debug stuff
+            label1.Hide(); // Hidden by default
+            label2.Hide(); // Hidden by default
+
+            //Debugging location
+            //label2.Location = new Point(0, 0);
+            //label2.BackColor = Color.Red;
 
             picBox_basketBall.BackColor = Color.Transparent;
             P1.BackColor = Color.White;
             //P2.BackColor = Color.Transparent;
 
         }
-
-        private void button1_Click_1(object sender, EventArgs e) // Debugging
-        {
-            //button1.BackColor = Color.Red;
-            //x += 100;
-            //y -= 150;
-            //player1.Move(x, y);
-        }
-
-
+        
+        // For 'Fun'
+        bool shiftDown, tabDown;
+        
         private void Form1_KeyDown_1(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.D) physics.moveRight = true;
-            if (e.KeyCode == Keys.A) physics.moveLeft = true;
-            if (e.KeyCode == Keys.W) physics.jump = true;
-            if (e.KeyCode == Keys.R) physics.pitchUp1 = true;
-            if (e.KeyCode == Keys.F) physics.pitchDown1 = true;
+            // Player 1
+            if (e.KeyCode == Keys.D) physics.moveRight1 = true;
+            if (e.KeyCode == Keys.A) physics.moveLeft1 = true;
+            if (e.KeyCode == Keys.Space) physics.jump1 = true;
+            if (e.KeyCode == Keys.ControlKey) physics.pitchUp1 = true;
+            if (e.KeyCode == Keys.ShiftKey) physics.pitchDown1 = true;
+            if (e.KeyCode == Keys.F) physics.greenFN1 = true;
 
+            // Player 2
+            if (e.KeyCode == Keys.Right) physics.moveRight2 = true;
+            if (e.KeyCode == Keys.Left) physics.moveLeft2 = true;
+            if (e.KeyCode == Keys.Up) physics.jump2 = true;
+            if (e.KeyCode == Keys.OemSemicolon) physics.pitchUp2 = true;
+            if (e.KeyCode == Keys.Oem2) physics.pitchDown2 = true;
+            if (e.KeyCode == Keys.Oem6) physics.greenFN2 = true;
 
-            // Fuckass debugging ball controll
-            else if (e.KeyCode == Keys.G)
+            //Resetting
+            if (e.KeyCode == Keys.Y)
             {
-                physics.VectorMovement(-10, 0); // (x,y) vector velocity
-            }
-            else if (e.KeyCode == Keys.J)
-            {
-                physics.VectorMovement(10, 0); // (x,y) vector velocity
-            }
-            else if (e.KeyCode == Keys.Y)
-            {
-                physics.VectorMovement(0, 10); // (x,y) vector velocity
-            }
-            else if (e.KeyCode == Keys.H)
-            {
-                physics.VectorMovement(0, -10); // (x,y) vector velocity
+                physics.Stop();
             }
 
+            //Starting
+            if (e.KeyCode == Keys.T)
+            {
+                startGameCon.Hide();
+                start = true;
+            }
+
+            // FUN {
+            if (e.KeyCode == Keys.Shift && (e.KeyCode == Keys.Tab) && e.KeyCode == Keys.F)
+            {
+                GlobalConfig.Chernobyl_V2 = !GlobalConfig.Chernobyl_V2;
+            }
+
+            if (e.KeyCode == Keys.ShiftKey) shiftDown = true;
+            if (e.KeyCode == Keys.Tab) tabDown = true;
+
+            if (shiftDown && tabDown && e.KeyCode == Keys.F)
+            {
+                GlobalConfig.Chernobyl_V2 = !GlobalConfig.Chernobyl_V2;
+            }
+
+            //} FUN stops :(
+
+
+            ////Debugging
+            //if (e.KeyCode == Keys.V) physics.dropBall = true;
+            //if (e.KeyCode == Keys.G) physics.deXl = true;
+            //if (e.KeyCode == Keys.J) physics.deXr = true;
+            //if (e.KeyCode == Keys.Y) physics.deYu = true;
+            //if (e.KeyCode == Keys.H) physics.deYd = true;
+
+            // Key debugging
+            //label2.Text = Convert.ToString(e.KeyCode);
+
+            //// Debugging ball controll
+            //if (e.KeyCode == Keys.G)
+            //{
+            //    physics.VectorMovement(-10, 0); // (x,y) vector velocity
+            //}
+            //if (e.KeyCode == Keys.J)
+            //{
+            //    physics.VectorMovement(10, 0); // (x,y) vector velocity
+            //}
+
+            // (x,y) vector velocity
+            //}
+            //if (e.KeyCode == Keys.H)
+            //{
+            //    physics.VectorMovement(0, -10); // (x,y) vector velocity
+            //}
         }
-
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.D) physics.moveRight = false;
-            if (e.KeyCode == Keys.A) physics.moveLeft = false;
-            if (e.KeyCode == Keys.W) physics.jump = false;
-            if (e.KeyCode == Keys.R) physics.pitchUp1 = false;
-            if (e.KeyCode == Keys.F) physics.pitchDown1 = false;
+            // Player 1
+            if (e.KeyCode == Keys.D) physics.moveRight1 = false;
+            if (e.KeyCode == Keys.A) physics.moveLeft1 = false;
+            if (e.KeyCode == Keys.Space) physics.jump1 = false;
+            if (e.KeyCode == Keys.ControlKey) physics.pitchUp1 = false;
+            if (e.KeyCode == Keys.ShiftKey) physics.pitchDown1 = false;
+            if (e.KeyCode == Keys.F) physics.greenFN1 = false;
+            if (e.KeyCode == Keys.V) physics.dropBall = false;
+
+            // Player 2
+            if (e.KeyCode == Keys.Right) physics.moveRight2 = false;
+            if (e.KeyCode == Keys.Left) physics.moveLeft2 = false;
+            if (e.KeyCode == Keys.Up) physics.jump2 = false;
+            if (e.KeyCode == Keys.OemSemicolon) physics.pitchUp2 = false;
+            if (e.KeyCode == Keys.Oem2) physics.pitchDown2 = false;
+            if (e.KeyCode == Keys.Oem6) physics.greenFN2 = false;
+
+            // FUN
+            if (e.KeyCode == Keys.ShiftKey) shiftDown = false;
+            if (e.KeyCode == Keys.Tab) tabDown = false;
+
+
+            //// Debugging
+            //if (e.KeyCode == Keys.G) physics.deXl = false;
+            //if (e.KeyCode == Keys.J) physics.deXr = false;
+            //if (e.KeyCode == Keys.Y) physics.deYu = false;
+            //if (e.KeyCode == Keys.H) physics.deYd = false;
+            //if (e.KeyCode == Keys.V) physics.dropBall = false;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -92,12 +200,37 @@ namespace Basket_Ball_Game
 
             if (physics == null) return;
 
-            //Drawing the Ball
-            e.Graphics.DrawImage(Properties.Resources.sprite_basketBall,
-                (int)physics.bx, (int)physics.by,
-                75, 75);
+            //Drawing the Ball w rolling
+            var stateb = e.Graphics.Save();
 
-            //Drawing the Player
+            float x = (float)physics.bx;
+            float y = (float)physics.by;
+            float size = 75f;
+
+            // Move origin to center of the ball
+            e.Graphics.TranslateTransform(
+                x + size / 2f,
+                y + size / 2f
+            );
+
+            // Rotate (degrees)
+            e.Graphics.RotateTransform((float)physics.broll);
+
+            // Move origin back
+            e.Graphics.TranslateTransform(-size / 2f, -size / 2f);
+
+            // Draw ball
+            e.Graphics.DrawImage(
+                Properties.Resources.sprite_basketBall,
+                0f,
+                0f,
+                size,
+                size
+            );
+
+            e.Graphics.Restore(stateb);
+
+            //Drawing the Player 1
             e.Graphics.DrawImage(Properties.Resources.Person_sprite_Scaled_down,
                 (int)physics.x1, (int)physics.y1,
                 100, 300);
@@ -117,7 +250,7 @@ namespace Basket_Ball_Game
             //Drawing the locator arrow
             if (physics.by < -50) // Only show if the ball is above the visible area
             {
-                float arrowX = Convert.ToSingle(physics.bx)-15;
+                float arrowX = Convert.ToSingle(physics.bx) - 15;
                 arrowX = Math.Max(20, Math.Min(this.ClientSize.Width - 20, arrowX));
 
                 float distance = Convert.ToSingle(Math.Abs(physics.by));
@@ -128,13 +261,29 @@ namespace Basket_Ball_Game
                 var arrowState = e.Graphics.Save();
 
                 // Drawing shi
-                e.Graphics.TranslateTransform(arrowX + (75/2), 30);
+                e.Graphics.TranslateTransform(arrowX + (75 / 2), 30);
                 e.Graphics.ScaleTransform(scale, scale);
                 e.Graphics.RotateTransform(-90);
                 e.Graphics.DrawImage(Properties.Resources.Arrow_Scaled_down, -15, 0, 30, 30);
                 e.Graphics.Restore(arrowState);
             }
-        }
 
+            //Drawing the Player 2
+            e.Graphics.DrawImage(Properties.Resources.Person_sprite_Scaled_down,
+                (int)physics.x2, (int)physics.y2,
+                100, 300);
+
+            float shoulderX1 = (float)physics.x2 + 50; // Adjust these numbers 
+            float shoulderY1 = (float)physics.y2 + 111; // to match your sprite's shoulder
+
+            // visual rotation
+            var state1 = e.Graphics.Save(); // Save the screen state
+            e.Graphics.TranslateTransform(shoulderX1, shoulderY1); // Move 'pen' to shoulder
+            e.Graphics.RotateTransform(physics.armAngle2);       // Spin the 'pen'
+
+            // Draw the Arm 
+            e.Graphics.DrawImage(Properties.Resources.Person_arm_Scaled_down, 0, -16, 150, 32);
+            e.Graphics.Restore(state1);
+        }
     }
 }
