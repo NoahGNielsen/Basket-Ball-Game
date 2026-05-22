@@ -40,6 +40,10 @@
             p1Cooldown = new Label();
             p2Cooldown = new Label();
             GameStartTimer = new Label();
+            p1Con = new Label();
+            p2Con = new Label();
+            tMidCon = new Label();
+            startGameCon = new Label();
             ((System.ComponentModel.ISupportInitialize)P1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picBox_basketBall).BeginInit();
             ((System.ComponentModel.ISupportInitialize)P2).BeginInit();
@@ -165,12 +169,55 @@
             GameStartTimer.TabIndex = 15;
             GameStartTimer.Text = "0";
             // 
+            // p1Con
+            // 
+            p1Con.AutoSize = true;
+            p1Con.Location = new Point(12, 100);
+            p1Con.Name = "p1Con";
+            p1Con.RightToLeft = RightToLeft.No;
+            p1Con.Size = new Size(67, 20);
+            p1Con.TabIndex = 16;
+            p1Con.Text = "Controls:";
+            // 
+            // p2Con
+            // 
+            p2Con.AutoSize = true;
+            p2Con.Location = new Point(1679, 100);
+            p2Con.Name = "p2Con";
+            p2Con.RightToLeft = RightToLeft.Yes;
+            p2Con.Size = new Size(67, 20);
+            p2Con.TabIndex = 17;
+            p2Con.Text = ":Controls";
+            // 
+            // tMidCon
+            // 
+            tMidCon.AutoSize = true;
+            tMidCon.Location = new Point(884, 29);
+            tMidCon.Name = "tMidCon";
+            tMidCon.Size = new Size(171, 20);
+            tMidCon.TabIndex = 18;
+            tMidCon.Text = "Y = reset score and reset";
+            // 
+            // startGameCon
+            // 
+            startGameCon.AutoSize = true;
+            startGameCon.Font = new Font("Segoe UI", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            startGameCon.Location = new Point(745, 348);
+            startGameCon.Name = "startGameCon";
+            startGameCon.Size = new Size(367, 50);
+            startGameCon.TabIndex = 19;
+            startGameCon.Text = "Press T to start game";
+            // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.map_basketBallCourt;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1762, 947);
+            Controls.Add(startGameCon);
+            Controls.Add(tMidCon);
+            Controls.Add(p2Con);
+            Controls.Add(p1Con);
             Controls.Add(GameStartTimer);
             Controls.Add(p2Cooldown);
             Controls.Add(p1Cooldown);
@@ -215,5 +262,9 @@
         public Label p1Cooldown;
         public Label p2Cooldown;
         public Label GameStartTimer;
+        private Label p1Con;
+        private Label p2Con;
+        private Label tMidCon;
+        private Label startGameCon;
     }
 }

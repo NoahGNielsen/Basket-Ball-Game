@@ -15,9 +15,9 @@ namespace Basket_Ball_Game
             // le holy grail
             //
             this.Text = "Thy utmost exquisite festive exhibition of projectiles, wherein spherical entities are deliberately propelled through the air"; // NO QUESTIONS
-            //
-            // these lines are dedecated to praise 'le name'
-            
+                                                                                                                                                         //
+                                                                                                                                                         // these lines are dedecated to praise 'le name'
+
             this.ClientSize = new Size(GlobalConfig.gameSizeX, GlobalConfig.gameSizeY);
             GlobalConfig.gameSizeX = this.ClientSize.Width;
 
@@ -35,12 +35,12 @@ namespace Basket_Ball_Game
 
             physics.theGreatReset = true;
             physics.StartEngine();
-            
+
             physics.startP((GlobalConfig.gameSizeX - picBox_basketBall.Width) / 2, GlobalConfig.pFieldY - ballStartingHeight);
             physics.moveP1(xP1, y);
-            physics.moveP2(xP2 - P2.Width-20, y);
+            physics.moveP2(xP2 - P2.Width - 20, y);
 
-            
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -48,15 +48,29 @@ namespace Basket_Ball_Game
 
             // sets ui elements posision
             label_scoreTitle.Location = new Point((GlobalConfig.gameSizeX / 2) - label_scoreTitle.Width / 2, label_scoreTitle.Location.Y);
+
+            startGameCon.Location = new Point((GlobalConfig.gameSizeX - startGameCon.Width) / 2, (GlobalConfig.gameSizeY - startGameCon.Height) / 2 - 100);
+            startGameCon.BackColor = Color.White;
+
+            tMidCon.Location = new Point((GlobalConfig.gameSizeX - tMidCon.Width) / 2, label_scoreTitle.Location.Y - (label_scoreTitle.Height));
+            tMidCon.BackColor = Color.White;
+
             label_scoreTeam1.Location = new Point(-scoreOffset + ((GlobalConfig.gameSizeX / 2) - label_scoreTeam1.Width), label_scoreTeam1.Location.Y);
             label_scoreTeam2.Location = new Point(scoreOffset + (GlobalConfig.gameSizeX / 2), label_scoreTeam1.Location.Y);
+
             GameStartTimer.Hide();
 
+            p1Con.Text = "Controls: \nA = Left \nD = Right \nSpace = Jump \nShift = Arm Up \nControl = Arm Down \nF = Throw Ball";
+            p1Con.Location = new Point(10, 80);
+            p1Con.BackColor = Color.White;
 
+            p2Con.Text = ":Controls \nArrow Left = Left \nArrow Right = Right \nArrow Up = Jump \n^ or ¨ = Arm Up \n' or * = Arm Down \nÅ = Throw Ball";
+            p2Con.Location = new Point(GlobalConfig.gameSizeX - 10 - p2Con.Width, 80);
+            p2Con.BackColor = Color.White;
 
             // Debug stuff
-            label1.Hide();
-            label2.Hide();
+            label1.Hide(); // Hidden by default
+            label2.Hide(); // Hidden by default
 
             //Debugging location
             //label2.Location = new Point(0, 0);
@@ -96,6 +110,7 @@ namespace Basket_Ball_Game
             //Starting
             if (e.KeyCode == Keys.T)
             {
+                startGameCon.Hide();
                 start = true;
             }
 

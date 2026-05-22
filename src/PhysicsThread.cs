@@ -27,6 +27,8 @@ namespace Basket_Ball_Game
         int leftScore;
         int rightScore;
         bool hasScoredonce;
+        double scoreIntermediateTimer;
+        bool softerReset;
 
         double velocityY = 0;
         double velocityX = 0;
@@ -183,10 +185,9 @@ namespace Basket_Ball_Game
                         // starts the reset timer / play cooldown
                         if ((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter > 0)
                         {
+                            _form.GameStartTimer.Location = new Point((GlobalConfig.gameSizeX / 2) - _form.GameStartTimer.Width / 2, _form.label_scoreTeam1.Location.Y);
                             _form.GameStartTimer.Show();
                             _form.GameStartTimer.Text = Convert.ToString(Convert.ToInt32((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter) / (1000 / 60));
-                            _form.GameStartTimer.Location = new Point((GlobalConfig.gameSizeX / 2) - _form.GameStartTimer.Width / 2, _form.label_scoreTeam1.Location.Y);
-
                             resetTimeCounter++;
                         }
                         else if ((GlobalConfig.gameResetTimer * (1000 / 60)) - resetTimeCounter <= 0)
@@ -381,7 +382,8 @@ namespace Basket_Ball_Game
                                 rightScore++;
                                 hasScoredonce = true;
                                 _form.label_scoreTeam1.Text = (rightScore).ToString();
-                                softReset = true;
+                                softerReset = true;
+
                             }
                             if (checkGoal(GlobalConfig.rimLeft.xL, GlobalConfig.rimLeft.xL2, GlobalConfig.rimLeft.yB, GlobalConfig.rimLeft.yT, velocityY) && !isHolding1 && !isHolding2 && !hasScoredonce) // left goal
                             {
@@ -389,9 +391,21 @@ namespace Basket_Ball_Game
                                 leftScore++;
                                 hasScoredonce = true;
                                 _form.label_scoreTeam2.Text = (leftScore).ToString();
-                                softReset = true;
+                                softerReset = true;
                             }
 
+                            // Delay upon scoring
+                            if ((10 * (1000 / 60)) - scoreIntermediateTimer > 0 && softerReset)
+                            {
+                                scoreIntermediateTimer++;
+                            }
+                            else if ((10 * (1000 / 60)) - scoreIntermediateTimer <= 0)
+                            {
+                                // Continue on
+                                scoreIntermediateTimer = 0;
+                                softReset = true;
+                                softerReset = false;
+                            }
 
                             if (!isHolding1 || !isHolding2)
                             {
@@ -508,7 +522,7 @@ namespace Basket_Ball_Game
                 double distanceSquared = (diffX * diffX) + (diffY * diffY);
 
                 // Checks if the distance to the ball is less than ballRadius^2 (hitbox's overlapping)
-                if (distanceSquared <= (radius * radius) / 2)
+                if (distanceSquared <= (10))
                 {
                     return true;
                 }
