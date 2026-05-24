@@ -235,8 +235,8 @@ namespace Basket_Ball_Game
                 (int)physics.x1, (int)physics.y1,
                 100, 300);
 
-            float shoulderX = (float)physics.x1 + 50; // Adjust these numbers 
-            float shoulderY = (float)physics.y1 + 111; // to match your sprite's shoulder
+            float shoulderX = (float)physics.x1 + 50;
+            float shoulderY = (float)physics.y1 + 111;
 
             // visual rotation
             var state = e.Graphics.Save(); // Save the screen state
@@ -273,8 +273,8 @@ namespace Basket_Ball_Game
                 (int)physics.x2, (int)physics.y2,
                 100, 300);
 
-            float shoulderX1 = (float)physics.x2 + 50; // Adjust these numbers 
-            float shoulderY1 = (float)physics.y2 + 111; // to match your sprite's shoulder
+            float shoulderX1 = (float)physics.x2 + 50;
+            float shoulderY1 = (float)physics.y2 + 111;
 
             // visual rotation
             var state1 = e.Graphics.Save(); // Save the screen state

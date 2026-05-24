@@ -211,16 +211,15 @@
             // 
             // Chernobyl
             // 
-            Chernobyl.Location = new Point(0, 900);
+            Chernobyl.BackColor = Color.FromArgb(30, 30, 30);
+            Chernobyl.Dock = DockStyle.Bottom;
+            Chernobyl.Font = new Font("Segoe UI", 25F);
+            Chernobyl.ForeColor = Color.Red;
+            Chernobyl.Location = new Point(0, 867);
             Chernobyl.Name = "Chernobyl";
             Chernobyl.Size = new Size(1762, 80);
-            Chernobyl.Font = new Font("Segoe UI", 25f, FontStyle.Regular);
             Chernobyl.TabIndex = 20;
-            Chernobyl.Dock = DockStyle.Bottom;
-            Chernobyl.Height = 80;            
-            Chernobyl.Text = "☢ CHERNOBYL ACTIVE ☢";              
-            Chernobyl.BackColor = Color.FromArgb(30, 30, 30);
-            Chernobyl.ForeColor = Color.Red;
+            Chernobyl.Text = "☢ CHERNOBYL ACTIVE ☢";
             Chernobyl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form1
@@ -282,7 +281,7 @@
         private Label p2Con;
         private Label tMidCon;
         private Label startGameCon;
-        public Label Chernobyl;
         private Label label3;
+        public Label Chernobyl;
     }
 }
